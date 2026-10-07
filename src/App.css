@@ -13,6 +13,8 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { background: #fdf3cf; overflow-x: hidden; }
+/* the canvas is scaled with zoom; stop mobile browsers from inflating its small text */
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 body { font-family: Figtree, system-ui, sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; }
 img { display: block; max-width: 100%; }
 a, button { color: inherit; text-decoration: none; font: inherit; background: none; border: 0; cursor: pointer; }
@@ -267,7 +269,7 @@ a, button { color: inherit; text-decoration: none; font: inherit; background: no
 .store:hover .go { transform: translateX(3px); }
 .book, .dir { position: absolute; top: 466px; display: flex; align-items: center; justify-content: center; gap: 10px; height: 46px; border-radius: 4px; font-size: 14px; font-weight: 500; transition: filter .25s, transform .25s; }
 .book { left: 33px; width: calc(50% - 39px); background: var(--brown); color: #fff; }
-.book i { display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: var(--yellow); color: #111; font-size: 13px; font-style: normal; }
+.book i { flex: none; display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: var(--yellow); color: #111; font-size: 13px; font-style: normal; }
 .dir svg { width: 12px; height: 12px; }
 .dir { right: 33px; width: calc(50% - 39px); background: var(--row); border: 1px solid #9ca3af; color: var(--ink); }
 .book:hover, .dir:hover { filter: brightness(1.06); transform: translateY(-1px); }

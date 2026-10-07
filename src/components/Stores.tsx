@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { place } from '../utils'
 import { getImageUrl } from '../helpers/image_helper'
 import { CITIES, SITE_URL, STORES, type City, type Store } from '../stores'
+import { ConsultModal } from './ConsultModal'
 import { Chat, Chevron, Clock, Eye, Home, Send, Shop, Star } from './Icons'
 
 const AUTO_ADVANCE_MS = 3000
@@ -77,6 +78,8 @@ function Carousel({ store }: { store: Store }) {
 export function Stores() {
   const [city, setCity] = useState<City>('Bengaluru')
   const [selected, setSelected] = useState<Store>(STORES[0])
+  const [consultOpen, setConsultOpen] = useState(false)
+  const closeConsult = useCallback(() => setConsultOpen(false), [])
   const list = STORES.filter((s) => s.city === city)
 
   const pickCity = (c: City) => {
@@ -114,7 +117,7 @@ export function Stores() {
           ))}
         </div>
         <div className="acts">
-          <a href={`${SITE_URL}${selected.handle}`} target="_blank" rel="noreferrer" className="book">Book Appointment <i>›</i></a>
+          <button type="button" className="book" aria-haspopup="dialog" onClick={() => setConsultOpen(true)}>Book Appointment <i>›</i></button>
           <a href={selected.direction} target="_blank" rel="noreferrer" className="dir">Directions <Send /></a>
         </div>
         <div className="meta">
@@ -123,6 +126,7 @@ export function Stores() {
           <div><Eye /><p><b>Live</b>Visualization</p></div>
         </div>
       </div>
+      {consultOpen && <ConsultModal onClose={closeConsult} />}
     </>
   )
 }
