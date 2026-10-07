@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type CSSProperties, type FormEvent } from 
 import { createPortal } from 'react-dom'
 import { asset } from '../utils'
 import { useIsDesktop } from '../hooks/useDesignCanvas'
-import { bookConsultation, CITIES, PRODUCTS } from '../consultation'
+import { bookConsultation, CITIES, OtpError, OTP_LENGTH, PRODUCTS, resendOtp, sendOtp, verifyOtp } from '../consultation'
 
 type Rect = [x: number, y: number, w: number, h: number]
 type Layout = {
@@ -91,7 +91,12 @@ export function ConsultModal({ onClose }: { onClose: () => void }) {
   const [city, setCity] = useState<string>(CITIES[0].value)
   const [products, setProducts] = useState<string[]>(PRODUCTS.map((p) => p.value))
   const [touched, setTouched] = useState(false)
-  const [status, setStatus] = useState<'idle' | 'sending' | 'done' | 'error'>('idle')
+  // form → (send OTP) → otp → (verify OTP, then create the lead) → done
+  const [status, setStatus] = useState<'idle' | 'sending' | 'otp' | 'verifying' | 'done' | 'error'>('idle')
+  const [otp, setOtp] = useState('')
+  const [otpError, setOtpError] = useState('')
+  const [resendIn, setResendIn] = useState(0)
+  const otpInput = useRef<HTMLInputElement>(null)
   const firstInput = useRef<HTMLInputElement>(null)
   const errors = validate(values, products)
 
@@ -107,16 +112,64 @@ export function ConsultModal({ onClose }: { onClose: () => void }) {
     }
   }, [onClose])
 
+  useEffect(() => {
+    if (resendIn <= 0) return
+    const id = window.setTimeout(() => setResendIn((s) => s - 1), 1000)
+    return () => window.clearTimeout(id)
+  }, [resendIn])
+
+  useEffect(() => {
+    if (status === 'otp') otpInput.current?.focus()
+  }, [status])
+
+  const failMessage = (err: unknown, fallback: string) => (err instanceof OtpError ? err.message : fallback)
+
   const submit = async (e: FormEvent) => {
     e.preventDefault()
     setTouched(true)
     if (Object.keys(errors).length || status === 'sending') return
     setStatus('sending')
+    setOtpError('')
+    try {
+      await sendOtp(values.contact)
+      setOtp('')
+      setResendIn(30)
+      setStatus('otp')
+    } catch (err) {
+      setOtpError(failMessage(err, 'Could not send the OTP. Please try again.'))
+      setStatus('error')
+    }
+  }
+
+  const verify = async (e: FormEvent) => {
+    e.preventDefault()
+    if (otp.length !== OTP_LENGTH || status === 'verifying') return
+    setStatus('verifying')
+    setOtpError('')
+    try {
+      await verifyOtp(values.contact, otp)
+    } catch (err) {
+      setOtpError(failMessage(err, 'Incorrect OTP. Please try again.'))
+      setStatus('otp')
+      return
+    }
     try {
       await bookConsultation({ ...values, name: values.name.trim(), city, products })
       setStatus('done')
     } catch {
-      setStatus('error')
+      setOtpError('Something went wrong — please try again or call +91 81215 23945.')
+      setStatus('otp')
+    }
+  }
+
+  const resend = async () => {
+    if (resendIn > 0) return
+    setOtpError('')
+    try {
+      await resendOtp(values.contact)
+      setResendIn(30)
+    } catch (err) {
+      setOtpError(failMessage(err, 'Could not resend the OTP. Please try again.'))
     }
   }
 
@@ -142,6 +195,31 @@ export function ConsultModal({ onClose }: { onClose: () => void }) {
             <p>Our design expert will call you shortly to plan your Diwali makeover.</p>
             <button type="button" className="consult-submit" style={{ fontSize: L.font.submit }} onClick={onClose}>Close</button>
           </div>
+        ) : status === 'otp' || status === 'verifying' ? (
+          <form className="consult-otp" noValidate onSubmit={verify}>
+            <b>Verify your number</b>
+            <p>
+              Enter the {OTP_LENGTH}-digit OTP sent to <strong>+91 {values.contact}</strong>
+              <button type="button" className="consult-link" onClick={() => setStatus('idle')}>Change</button>
+            </p>
+            <input
+              ref={otpInput}
+              className={`consult-otp-input${otpError ? ' invalid' : ''}`}
+              inputMode="numeric"
+              autoComplete="one-time-code"
+              aria-label="OTP"
+              maxLength={OTP_LENGTH}
+              value={otp}
+              onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, OTP_LENGTH))}
+            />
+            {otpError && <span className="consult-otp-error" role="alert">{otpError}</span>}
+            <button type="submit" className="consult-submit" style={{ fontSize: L.font.submit }} disabled={otp.length !== OTP_LENGTH || status === 'verifying'}>
+              {status === 'verifying' ? 'Verifying…' : 'Verify & Submit'}
+            </button>
+            <button type="button" className="consult-link" disabled={resendIn > 0} onClick={resend}>
+              {resendIn > 0 ? `Resend OTP in ${resendIn}s` : 'Resend OTP'}
+            </button>
+          </form>
         ) : (
           <form noValidate onSubmit={submit}>
             {FIELDS.map((f, i) => (
@@ -192,11 +270,11 @@ export function ConsultModal({ onClose }: { onClose: () => void }) {
             </fieldset>
 
             <button type="submit" className="consult-submit" style={{ ...box(L.submit), fontSize: L.font.submit }} disabled={status === 'sending'}>
-              {status === 'sending' ? 'Submitting…' : 'Submit'}
+              {status === 'sending' ? 'Sending OTP…' : 'Submit'}
             </button>
             {status === 'error' && (
               <span className="consult-error center" role="alert" style={{ left: L.submit[0], width: L.submit[2], top: L.submit[1] + L.submit[3] + 4 }}>
-                Something went wrong — please try again or call +91 81215 23945.
+                {otpError}
               </span>
             )}
           </form>

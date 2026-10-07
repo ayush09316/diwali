@@ -318,6 +318,16 @@ a, button { color: inherit; text-decoration: none; font: inherit; background: no
 .consult-done b { color: var(--maroon); font-size: 34px; }
 .consult-done p { font-size: 18px; font-weight: 500; line-height: 1.4; }
 .consult-done .consult-submit { position: static; width: 220px; height: 46px; margin-top: 8px; }
+.consult-otp { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 0 18% 6%; text-align: center; }
+.consult-otp b { color: var(--maroon); font-size: 30px; }
+.consult-otp p { font-size: 17px; font-weight: 500; line-height: 1.4; }
+.consult-otp-input { width: 220px; height: 56px; border: 1px solid #ddccb6; border-radius: 8px; background: #fff; color: var(--ink); font: 700 28px Figtree, system-ui, sans-serif; letter-spacing: .6em; padding-left: .6em; text-align: center; outline: none; }
+.consult-otp-input:focus { border-color: #b77a3a; box-shadow: 0 0 0 3px rgba(137, 61, 0, .12); }
+.consult-otp-input.invalid { border-color: #d64545; }
+.consult-otp-error { color: #c0392b; font-size: 14px; font-weight: 500; }
+.consult-otp .consult-submit { position: static; width: 260px; height: 48px; }
+.consult-link { margin-left: 8px; color: var(--brown); font-size: 15px; font-weight: 600; text-decoration: underline; }
+.consult-link:disabled { color: #9a8f7a; text-decoration: none; cursor: default; }
 @keyframes popIn { from { opacity: 0; transform: translateY(14px) scale(.97); } to { opacity: 1; transform: none; } }
 
 /* ---------- motion ---------- */
