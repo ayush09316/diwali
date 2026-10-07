@@ -1,9 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type CSSProperties } from 'react'
 import { createPortal } from 'react-dom'
 import { place } from '../utils'
 import { videos } from '../data'
 import { getImageUrl } from '../helpers/image_helper'
 import { FitText } from './FitText'
+
+// desktop left offsets of each tile inside the strip
+const VIDEO_X = [0, 297, 595, 892, 1195]
 
 const Play = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -33,13 +36,14 @@ export function Videos() {
 
   return (
     <>
-      <FitText as="h2" fit={[889, 1171, 3848]} fitM={[170, 226, 936]} className="h rv" style={{ color: 'var(--maroon)' }}>Videos</FitText>
-      <div className="a vids" style={place({ x: 307, y: 4026, w: 1466, h: 346 }, { x: 0, y: 966, w: 402, h: 221 })}>
+      <FitText as="h2" fit={[601, 1423, 2973]} fitM={[58, 359, 1198]} className="h rv" style={{ color: 'var(--maroon)' }}>See The Transformation Live</FitText>
+      <div className="a vids" style={place({ x: 280, y: 3091, w: 1466, h: 347 }, { x: 0, y: 1232, w: 402, h: 221 })}>
         {videos.map((v, i) => (
           <button
             key={v.src}
             type="button"
             className="vid"
+            style={{ '--vx': VIDEO_X[i] } as CSSProperties}
             aria-label={`Play ${v.alt}`}
             onClick={() => setOpen(i)}
             onMouseEnter={(e) => e.currentTarget.querySelector('video')?.play().catch(() => {})}

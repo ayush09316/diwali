@@ -1,4 +1,4 @@
-import { useEffect, type RefObject } from 'react'
+import { useEffect, useSyncExternalStore, type RefObject } from 'react'
 
 export const DESKTOP_WIDTH = 2064
 export const MOBILE_WIDTH = 402
@@ -67,6 +67,12 @@ export function useDesignCanvas(stageRef: RefObject<HTMLElement>) {
   }, [stageRef])
 }
 
+const desktopQuery = window.matchMedia(DESKTOP_QUERY)
+const subscribe = (onChange: () => void) => {
+  desktopQuery.addEventListener('change', onChange)
+  return () => desktopQuery.removeEventListener('change', onChange)
+}
+
 export function useIsDesktop() {
-  return window.matchMedia(DESKTOP_QUERY).matches
+  return useSyncExternalStore(subscribe, () => desktopQuery.matches)
 }

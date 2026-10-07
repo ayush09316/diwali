@@ -4,9 +4,22 @@ export const Chevron = () => (
   </svg>
 )
 
+// solid chevron used on the yellow round arrows
+export const Caret = () => (
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M7.5 3.5h5.2L18 12l-5.3 8.5H7.5L12.8 12z" fill="currentColor" />
+  </svg>
+)
+
 export const ArrowRight = () => (
   <svg width="34" height="20" viewBox="0 0 34 20" fill="none" stroke="currentColor" strokeWidth={2.6} strokeLinecap="round" strokeLinejoin="round">
     <path d="M2 10h29M23 3l8 7-8 7" />
+  </svg>
+)
+
+export const LongArrow = () => (
+  <svg width="59" height="23" viewBox="0 0 59 23" fill="none" stroke="currentColor" strokeWidth={2.6} strokeLinecap="round" strokeLinejoin="round">
+    <path d="M2 11.5h54M46 2l10 9.5-10 9.5" />
   </svg>
 )
 

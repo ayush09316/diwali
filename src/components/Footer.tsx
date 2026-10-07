@@ -1,6 +1,4 @@
-import { Fragment } from 'react'
 import { place } from '../utils'
-import { SITE_URL } from '../stores'
 import { FitText } from './FitText'
 
 const SOCIALS = [
@@ -36,39 +34,26 @@ const SOCIALS = [
   },
 ]
 
-const LEGAL = [
-  { label: 'Terms & Conditions', href: '/terms', fit: [583, 732, 10123], fitM: [50, 104, 3220] },
-  { label: 'Privacy Policy', href: '/privacy', fit: [776, 883, 10123], fitM: [121, 160, 3220] },
-  { label: 'Cancellation & Refund Policy', href: '/cancellation-refund-policy', fit: [926, 1147, 10123], fitM: [177, 257, 3220] },
-  { label: 'Shipping & Service Policy', href: '/shipping-service-policy', fit: [1190, 1386, 10123], fitM: [273, 344, 3220] },
-] as const
-
-const SEPARATORS = [
-  { d: { x: 753, y: 10123, w: 2, h: 21 }, m: { x: 112, y: 3220, w: 1, h: 8 } },
-  { d: { x: 903, y: 10123, w: 2, h: 21 }, m: { x: 168, y: 3220, w: 1, h: 8 } },
-  { d: { x: 1167, y: 10123, w: 2, h: 21 }, m: { x: 265, y: 3220, w: 1, h: 8 } },
-]
-
 export function Footer() {
   return (
     <footer>
-      <FitText fit={[798, 1253, 9561]} fitM={[152, 256, 3014]} className="f1 rv">This Festive Season</FitText>
-      <FitText as="h3" fit={[509, 1513, 9622]} fitM={[86, 315, 3028]} className="f2 rv">Beautiful Homes, Brighter Moments</FitText>
+      <FitText fit={[775, 1230, 7607]} fitM={[152, 256, 3886]} className="f1 rv">This Festive Season</FitText>
+      <FitText as="h3" fit={[486, 1489, 7668]} fitM={[86, 315, 3901]} className="f2 rv">Beautiful Homes, Brighter Moments</FitText>
 
-      <FitText fit={[114, 300, 9960]} fitM={[26, 128, 3087]} className="foot-brand">Material Depot</FitText>
-      <FitText as="a" href="tel:+918121523945" fit={[113, 254, 10020]} fitM={[25, 103, 3120]} className="foot-text">+91 81215 23945</FitText>
-      <a href="tel:+918121523945" className="a foot-call" style={place({ x: 266, y: 10010, w: 91, h: 37 }, { x: 109, y: 3114, w: 50, h: 19 })} data-fsw="34" data-fsw-m="16" data-fst="Call">
+      <FitText fit={[155, 340, 7851]} fitM={[18, 119, 3960]} className="foot-brand">Material Depot</FitText>
+      <FitText as="a" href="tel:+918121523945" fit={[154, 294, 7912]} fitM={[17, 94, 3993]} className="foot-text">+91 81215 23945</FitText>
+      <a href="tel:+918121523945" className="a foot-call" style={place({ x: 308, y: 7902, w: 89, h: 35 }, { x: 102, y: 3988, w: 49, h: 18 })} data-fsw="34" data-fsw-m="17" data-fst="Call">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinejoin="round" aria-hidden="true">
           <path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2" />
         </svg>
         Call
       </a>
-      <svg className="a foot-mail" style={place({ x: 393, y: 10020, w: 18, h: 20 }, { x: 178, y: 3120, w: 10, h: 10 })} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+      <svg className="a foot-mail" style={place({ x: 432, y: 7908, w: 23, h: 22 }, { x: 171, y: 3993, w: 10, h: 8 })} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
         <path d="M3 5h18v14H3zM3 5l9 7 9-7" />
       </svg>
-      <FitText as="a" href="mailto:contact@materialdepot.com" fit={[422, 680, 10020]} fitM={[194, 335, 3120]} className="foot-text">contact@materialdepot.com</FitText>
+      <FitText as="a" href="mailto:contact@materialdepot.com" fit={[463, 721, 7912]} fitM={[186, 327, 3993]} className="foot-text">contact@materialdepot.com</FitText>
 
-      <div className="a foot-social" style={place({ x: 113, y: 10063, w: 247, h: 28 }, { x: 26, y: 3143, w: 134, h: 15 })}>
+      <div className="a foot-social" style={place({ x: 153, y: 7955, w: 249, h: 26 }, { x: 17, y: 4017, w: 135, h: 13 })}>
         {SOCIALS.map((s) => (
           <a key={s.label} href={s.href} target="_blank" rel="noreferrer" aria-label={s.label}>
             <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -79,26 +64,6 @@ export function Footer() {
         ))}
       </div>
 
-      <a href="https://forms.gle/mnKUWEYsDHUgZy4J6" target="_blank" rel="noreferrer" className="a foot-btn franchise" style={place({ x: 1517, y: 9995, w: 207, h: 51 }, { x: 25, y: 3179, w: 104, h: 25 })} data-fsw="160" data-fsw-m="79">
-        Become a Franchise
-      </a>
-      <a href={`${SITE_URL}/rental-enquiry`} target="_blank" rel="noreferrer" className="a foot-btn rental" style={place({ x: 1742, y: 9995, w: 164, h: 51 }, { x: 137, y: 3180, w: 82, h: 24 })} data-fsw="113" data-fsw-m="56">
-        Rental Enquiry
-      </a>
-
-      {LEGAL.map((l) => (
-        <Fragment key={l.href}>
-          <FitText as="a" href={`${SITE_URL}${l.href}`} target="_blank" rel="noreferrer" fit={[...l.fit]} fitM={[...l.fitM]} className="foot-legal">
-            {l.label}
-          </FitText>
-        </Fragment>
-      ))}
-      {SEPARATORS.map((s, i) => (
-        <span key={i} className="a foot-sep" style={place(s.d, s.m)} />
-      ))}
-      <FitText fit={[677, 1387, 10168]} fitM={[60, 320, 3243]} className="foot-powered">
-        Powered by Mdepot Retail Technologies Private Limited &amp; Managed by Haut Luxe Technologies Private Limited
-      </FitText>
     </footer>
   )
 }

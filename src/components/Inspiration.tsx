@@ -3,7 +3,7 @@ import { asset, place } from '../utils'
 import { rooms } from '../data'
 import { SITE_URL } from '../stores'
 import { FitText } from './FitText'
-import { ArrowRight, Chevron } from './Icons'
+import { ArrowRight, Chevron, LongArrow } from './Icons'
 
 export function Inspiration() {
   const [roomIndex, setRoomIndex] = useState(0)
@@ -19,25 +19,39 @@ export function Inspiration() {
 
   return (
     <>
-      <FitText fit={[364, 734, 7977]} fitM={[32, 130, 2332]} className="eyebrow insp-eb rv">Find Your Festive Inspiration</FitText>
-      <FitText fit={[367, 720, 8012]} fitM={[33, 127, 2341]} className="ttl rv">Inspiration</FitText>
-      <FitText fit={[364, 600, 8087]} fitM={[32, 95, 2361]} className="ttl rv">Gallery</FitText>
-      <FitText fit={[363, 716, 8188]} fitM={[32, 126, 2388]} className="desc rv">Explore 20,000+ design ideas</FitText>
-      <FitText fit={[362, 772, 8220]} fitM={[32, 140, 2396]} className="desc rv">and bring your dream home to life.</FitText>
+      <FitText fit={[332, 707, 6090]} fitM={[129, 275, 2862]} className="eyebrow insp-eb rv">Find Your Festive Inspiration</FitText>
+      <FitText fit={[335, 694, 6127]} className="ttl rv">Inspiration</FitText>
+      <FitText fit={[333, 572, 6203]} className="ttl rv">Gallery</FitText>
+      <FitText fit={[332, 690, 6309]} className="desc rv">Explore 20,000+ design ideas</FitText>
+      <FitText fit={[331, 746, 6343]} className="desc rv">and bring your dream home to life.</FitText>
+      <FitText fitM={[88, 320, 2878]} className="ttl rv">Inspiration Gallery</FitText>
+      <FitText fitM={[52, 355, 2909]} className="desc rv">Explore 20,000+ design ideas and bring your dream home to life.</FitText>
       <a
         href={`${SITE_URL}/inspiration-gallery`}
         target="_blank"
         rel="noreferrer"
         className="a btn-o btn-insp rv"
-        style={place({ x: 362, y: 8306, w: 413, h: 65 }, { x: 32, y: 2419, w: 109, h: 17 })}
-        data-fsw="288"
-        data-fsw-m="79"
+        style={place({ x: 330, y: 6433, w: 424, h: 67 }, { x: 134, y: 2929, w: 131, h: 25 })}
+        data-fsw="289"
+        data-fsw-m="97"
         data-fst="Explore the designs"
       >
         Explore the designs <ArrowRight />
       </a>
+      <a
+        href={`${SITE_URL}/inspiration-gallery`}
+        target="_blank"
+        rel="noreferrer"
+        className="a btn-o btn-gallery rv"
+        style={place({ x: 643, y: 6676, w: 610, h: 81 }, { x: 104, y: 3298, w: 189, h: 25 })}
+        data-fsw="421"
+        data-fsw-m="130"
+        data-fst="Explore Inspiration Gallery"
+      >
+        Explore Inspiration Gallery <LongArrow />
+      </a>
 
-      <div className="a insp-main" style={place({ x: 826, y: 7964, w: 607, h: 434 }, { x: 164, y: 2346, w: 186, h: 133 })}>
+      <div className="a insp-main" style={place({ x: 806, y: 6080, w: 622, h: 445 }, { x: 22, y: 3044, w: 357, h: 235 })}>
         {room.slides.map((s, i) => (
           <img key={s} src={asset(s)} alt={`${room.label} inspiration ${i + 1}`} className={i === slide ? 'on' : ''} loading={i === 0 ? 'eager' : 'lazy'} />
         ))}
@@ -45,20 +59,25 @@ export function Inspiration() {
         <button type="button" className="insp-arrow next" aria-label="Next design" onClick={() => go(1)}><Chevron /></button>
       </div>
 
-      {rooms.map((r, i) => (
-        <button
-          key={r.key}
-          type="button"
-          className={`a insp-thumb${i === roomIndex ? ' on' : ''}`}
-          style={place(r.thumbD, r.thumbM)}
-          aria-pressed={i === roomIndex}
-          aria-label={r.label}
-          onClick={() => pickRoom(i)}
-        >
-          <img className="off" src={asset(`thumb-${r.key}-off`)} alt="" />
-          <img className="on" src={asset(`thumb-${r.key}-on`)} alt="" />
-        </button>
-      ))}
+      {rooms.map((r, i) => {
+        const on = i === roomIndex
+        return (
+          <button
+            key={r.key}
+            type="button"
+            className={`a insp-thumb${on ? ' on' : ''}`}
+            style={place(r.thumbD, r.thumbM)}
+            aria-pressed={on}
+            aria-label={r.label}
+            onClick={() => pickRoom(i)}
+          >
+            <img className="d off" src={asset(`thumb-${r.key}-off`)} alt="" />
+            <img className="d on" src={asset(`thumb-${r.key}-on`)} alt="" />
+            <img className="m photo" src={asset(`thumb-${r.key}-photo`)} alt="" />
+            <span className="m label">{r.label}</span>
+          </button>
+        )
+      })}
     </>
   )
 }

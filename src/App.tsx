@@ -2,9 +2,9 @@ import { useRef } from 'react'
 import { useDesignCanvas } from './hooks/useDesignCanvas'
 import { useReveal } from './hooks/useReveal'
 import { Glows, Intro } from './components/Hero'
-import { BeforeAfterSection } from './components/Transformation'
 import { Videos } from './components/Videos'
-import { Upgrades } from './components/Upgrades'
+import { Makeover } from './components/Makeover'
+import { Explore } from './components/Explore'
 import { Steps } from './components/Steps'
 import { WhyVisit } from './components/WhyVisit'
 import { Inspiration } from './components/Inspiration'
@@ -21,9 +21,9 @@ export default function App() {
       <h1 className="sr-only">Diwali Makeover Fest — Give your home a Diwali makeover with wallpaper, wall panels and wooden flooring</h1>
       <Glows />
       <Intro />
-      <BeforeAfterSection />
+      <Makeover />
       <Videos />
-      <Upgrades />
+      <Explore />
       <Steps />
       <WhyVisit />
       <Inspiration />

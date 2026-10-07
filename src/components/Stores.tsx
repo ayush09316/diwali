@@ -27,7 +27,7 @@ function Carousel({ store }: { store: Store }) {
   const open = isOpenNow()
 
   return (
-    <div className="a tour" style={place({ x: 68, y: 8714, w: 1056, h: 616 }, { x: 27, y: 2532, w: 348, h: 203, s: 0.3295 })}>
+    <div className="a tour" style={place({ x: 104, y: 6871, w: 1056, h: 616 }, { x: 27, y: 3355, w: 348, h: 203, s: 0.3295 })}>
       <img className="tour-blur" src={src} alt="" aria-hidden="true" />
       <img key={src} className="tour-img" src={src} alt={`${store.name} Experience Centre`} />
 
@@ -87,7 +87,7 @@ export function Stores() {
   return (
     <>
       <Carousel store={selected} />
-      <div className="a finder" style={place({ x: 1124, y: 8714, w: 864, h: 616 }, { x: 27, y: 2735, w: 348, h: 248, s: 0.4028 })}>
+      <div id="experience-centre" className="a finder" style={place({ x: 1160, y: 6871, w: 864, h: 616 }, { x: 28.3, y: 3599, w: 346.5, h: 247, s: 0.401 })}>
         <h4>Choose your nearest <em>Experience Centre.</em></h4>
         <div className="chips">
           {CITIES.map((c) => (
