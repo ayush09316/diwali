@@ -1,11 +1,13 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { asset, isNear, place } from '../utils'
 import { categories, transformations, type Category } from '../data'
 import { FitText } from './FitText'
 import { Caret } from './Icons'
 
+const AUTO_MS = 3500
+
 const PANES = {
-  before: { d: { x: 648, y: 2338, w: 366, h: 447 }, m: { x: 12, y: 932, w: 183, h: 224 } },
+  before: { d: { x: 648, y: 2343, w: 366, h: 435 }, m: { x: 12, y: 931, w: 183, h: 216 } },
   after: { d: { x: 1022, y: 2343, w: 362, h: 435 }, m: { x: 202, y: 931, w: 180, h: 216 } },
 }
 
@@ -31,11 +33,19 @@ function Carousel({ category }: { category: Category }) {
   const [state, setState] = useState({ key: category.key, index: 0 })
   const index = state.key === category.key ? state.index : 0
   const go = (step: number) => setState({ key: category.key, index: (index + step + slides.length) % slides.length })
+  const [paused, setPaused] = useState(false)
+
+  // Auto-advance; restarts after every slide change so a manual click gets the full interval
+  useEffect(() => {
+    if (paused || slides.length < 2) return
+    const t = setTimeout(() => setState({ key: category.key, index: (index + 1) % slides.length }), AUTO_MS)
+    return () => clearTimeout(t)
+  }, [paused, index, category.key, slides.length])
 
   return (
     <>
       {(['before', 'after'] as const).map((side) => (
-        <div key={side} className="a ba-pane" style={place(PANES[side].d, PANES[side].m)}>
+        <div key={side} className="a ba-pane" style={place(PANES[side].d, PANES[side].m)} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
           {slides.map((s, i) => (
             <img key={s.key} className={i === index ? 'on' : ''} src={isNear(i, index, slides.length) ? asset(`ba-${s.key}-${side}`) : undefined} alt={`${s.alt} — ${side}`} />
           ))}
