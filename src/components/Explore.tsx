@@ -6,25 +6,23 @@ import { useIsDesktop } from '../hooks/useDesignCanvas'
 import { FitText } from './FitText'
 import { Caret } from './Icons'
 
-// Card offsets within a page (desktop units; mobile renders the same strip scaled down)
-const SLOT_X = [0, 274, 549, 824, 1099]
-const PAGE_W = { 5: 1374, 3: 824 }
+// Card pitch in desktop units (mobile renders the same strip scaled down)
+const PITCH = 274.75
+const cardLeft = (i: number) => Math.round(i * PITCH)
 
 function Cards({ category }: { category: Category }) {
-  // Desktop pages hold 5 cards, mobile 3 — the last page is left-aligned and ends with Explore More
+  // Arrows move one card at a time; the last stop ends with Explore More in the final slot
   const visible = useIsDesktop() ? 5 : 3
-  const pageW = PAGE_W[visible]
-  const cardLeft = (i: number) => Math.floor(i / visible) * pageW + SLOT_X[i % visible]
   const [page, setPage] = useState(0)
-  const pages = Math.ceil((category.cards.length + 1) / visible)
-  const go = (step: number) => setPage((p) => (p + step + pages) % pages)
+  const stops = Math.max(1, category.cards.length + 1 - visible + 1)
+  const go = (step: number) => setPage((p) => (p + step + stops) % stops)
 
   useEffect(() => setPage(0), [visible])
 
   return (
     <>
       <div className="a explore-clip" style={place({ x: 328, y: 3866, w: 1359, h: 334 }, { x: 28.1, y: 1623, w: 343.6, h: 140.3, s: 0.42 })}>
-        <div className="panel-track" style={{ transform: `translateX(${-page * pageW}px)` }}>
+        <div className="panel-track" style={{ transform: `translateX(${-cardLeft(page)}px)` }}>
           {category.cards.map((card, i) => (
             <a key={card.img} href={`${SITE_URL}${card.href}`} target="_blank" rel="noreferrer" className="panel-card" style={{ left: cardLeft(i) }}>
               <img src={asset(card.img)} alt={card.name} loading="lazy" />
