@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { asset, place } from '../utils'
+import { asset, isNear, place } from '../utils'
 import { categories, transformations, type Category } from '../data'
 import { FitText } from './FitText'
 import { Caret } from './Icons'
@@ -37,7 +37,7 @@ function Carousel({ category }: { category: Category }) {
       {(['before', 'after'] as const).map((side) => (
         <div key={side} className="a ba-pane" style={place(PANES[side].d, PANES[side].m)}>
           {slides.map((s, i) => (
-            <img key={s.key} className={i === index ? 'on' : ''} src={asset(`ba-${s.key}-${side}`)} alt={`${s.alt} — ${side}`} />
+            <img key={s.key} className={i === index ? 'on' : ''} src={isNear(i, index, slides.length) ? asset(`ba-${s.key}-${side}`) : undefined} alt={`${s.alt} — ${side}`} />
           ))}
         </div>
       ))}

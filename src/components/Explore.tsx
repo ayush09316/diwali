@@ -18,7 +18,6 @@ function Cards({ category }: { category: Category }) {
   const [page, setPage] = useState(0)
   const pages = Math.ceil((category.cards.length + 1) / visible)
   const go = (step: number) => setPage((p) => (p + step + pages) % pages)
-  const link = `${SITE_URL}${category.href}`
 
   useEffect(() => setPage(0), [visible])
 
@@ -27,11 +26,11 @@ function Cards({ category }: { category: Category }) {
       <div className="a explore-clip" style={place({ x: 328, y: 3866, w: 1359, h: 334 }, { x: 28.1, y: 1623, w: 343.6, h: 140.3, s: 0.42 })}>
         <div className="panel-track" style={{ transform: `translateX(${-page * pageW}px)` }}>
           {category.cards.map((card, i) => (
-            <a key={card} href={link} target="_blank" rel="noreferrer" className="panel-card" style={{ left: cardLeft(i) }}>
-              <img src={asset(card)} alt="" loading="lazy" />
+            <a key={card.img} href={`${SITE_URL}${card.href}`} target="_blank" rel="noreferrer" className="panel-card" style={{ left: cardLeft(i) }}>
+              <img src={asset(card.img)} alt={card.name} loading="lazy" />
             </a>
           ))}
-          <a href={link} target="_blank" rel="noreferrer" className="panel-card" style={{ left: cardLeft(category.cards.length) }}>
+          <a href={`${SITE_URL}${category.href}`} target="_blank" rel="noreferrer" className="panel-card" style={{ left: cardLeft(category.cards.length) }}>
             <img src={asset(`card-${category.key}-explore`)} alt={`Explore more ${category.name}`} loading="lazy" />
           </a>
         </div>

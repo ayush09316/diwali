@@ -33,7 +33,7 @@ a, button { color: inherit; text-decoration: none; font: inherit; background: no
   .btn-o { border-width: 3px; }
   .wpill { border-radius: 22px; }
   .vids { display: block; }
-  .vids .vid { position: absolute; left: calc(var(--vx) * 1px); top: 0; width: 271px; }
+  .vids .vid { position: absolute; left: calc(var(--vx) * 1px); top: 0; width: 271px; border-radius: 12px; }
   .vid .play { width: 48px; height: 48px; }
   .btn-insp { padding-right: 22px; }
   .btn-insp svg { margin-left: 3px; }
@@ -72,7 +72,7 @@ a, button { color: inherit; text-decoration: none; font: inherit; background: no
   .wpill { border-radius: 10px; }
   .vids { gap: 10px; padding: 0 42px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 0 42px; scrollbar-width: none; }
   .vids::-webkit-scrollbar { display: none; }
-  .vid { flex: 0 0 120px; border-radius: 5px; scroll-snap-align: start; }
+  .vid { flex: 0 0 120px; border-radius: 6px; scroll-snap-align: start; }
   .vid .play { width: 29px; height: 29px; }
   .insp-main { border: 1px solid var(--gold-b); }
   .stage .insp-main img { inset: -2px; width: calc(100% + 4px); height: calc(100% + 4px); }

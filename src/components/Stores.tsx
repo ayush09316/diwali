@@ -23,7 +23,7 @@ function Carousel({ store }: { store: Store }) {
   }, [store, count])
 
   const go = (step: number) => setIndex((i) => (i + step + count) % count)
-  const src = getImageUrl(store.images[index], '600')
+  const src = getImageUrl(store.images[index], '1300')
   const open = isOpenNow()
 
   return (

@@ -35,7 +35,7 @@ export type CategoryKey = 'wallpaper' | 'panel' | 'flooring'
 export type Category = {
   key: CategoryKey
   name: string
-  href: string
+  href: string // Explore More card → full collection
   price?: number
   on: string // tile image when selected
   off: string
@@ -44,16 +44,19 @@ export type Category = {
   pillD: Box
   pillM: Box
   tabW: number // inactive Explore tab width (desktop)
-  cards: string[]
+  cards: Card[]
 }
 
-const cards = (key: CategoryKey) => [1, 2, 3, 4, 5, 6, 7].map((n) => `card-${key}-${n}`)
+export type Card = { img: string; name: string; href: string }
+// card-<key>-<n> images in display order, each linking to its own listing (paths on SITE_URL)
+const cards = (key: CategoryKey, list: [name: string, href: string][]): Card[] =>
+  list.map(([name, href], i) => ({ img: `card-${key}-${i + 1}`, name, href }))
 
 export const categories: Category[] = [
   {
     key: 'wallpaper',
     name: 'Wallpaper',
-    href: '/wallpapers',
+    href: '/wallpapers/collection',
     price: 26,
     on: 'tile-wallpaper-on',
     off: 'tile-wallpaper-off',
@@ -62,12 +65,20 @@ export const categories: Category[] = [
     pillD: { x: 660, y: 2246, w: 166, h: 32 },
     pillM: { x: 25, y: 878, w: 83, h: 16 },
     tabW: 152,
-    cards: cards('wallpaper'),
+    cards: cards('wallpaper', [
+      ['Tropical', '/tropical-wallpapers'],
+      ['Chinoiserie', '/chinoserie-wallpapers'],
+      ['Indian', '/indian-wallpapers'],
+      ['Floral', '/floral-wallpapers'],
+      ['Pichwai', '/pichwai-wallpapers'],
+      ['Mural', '/mural-wallpapers'],
+      ['Kids', '/kids-room-wallpapers'],
+    ]),
   },
   {
     key: 'panel',
     name: 'Wall Panel',
-    href: '/panels',
+    href: '/panels/collection',
     price: 450,
     on: 'tile-panel-on',
     off: 'tile-panel-off',
@@ -76,7 +87,15 @@ export const categories: Category[] = [
     pillD: { x: 939, y: 2246, w: 166, h: 32 },
     pillM: { x: 164, y: 878, w: 83, h: 16 },
     tabW: 154,
-    cards: cards('panel'),
+    cards: cards('panel', [
+      ['Wood', '/wood-look-panel'],
+      ['Marble & Stone', '/marble-stone-panel'],
+      ['Solid Colour', '/solid-colour-panels'],
+      ['Geometric', '/geometric-panel'],
+      ['Digital Patterns', '/patterned-look-panel'],
+      ['Luxury Engravings', '/luxury-panels'],
+      ['3D', '/3d-wall-panel'],
+    ]),
   },
   {
     key: 'flooring',
@@ -90,7 +109,15 @@ export const categories: Category[] = [
     pillD: { x: 1182, y: 2246, w: 213, h: 33 },
     pillM: { x: 285, y: 878, w: 106, h: 16 },
     tabW: 198,
-    cards: cards('flooring'),
+    cards: cards('flooring', [
+      ['Natural Oak Light Wood', '/sp-00123-spc-floor-texture-finish-stone-core-4-ft-x-7-2-inch-x-6-5-mm/product'],
+      ['HDF Brazilian Cherry', '/lf-00320-h-hdf-real-wood-matte-surface-laminate-wood-floor-ac4-grade-memento-brazilian-cherry-48-x-8-inch-1217x196-mm-8-mm/product'],
+      ['Driftwood Grey Matte Finish', '/sp-00107-matte-finish-spc-floor-1220-x-181-mm-5-mm-b9mck6ad/product'],
+      ['HDF Herringbone Matte', '/lf-00331-d-hdf-herringbone-matte-surface-ac5-grade-beaconia-olivia-19-x-4-inch-470x95-mm-8-mm/product'],
+      ['Umber Brown Matte Finish', '/sp-00116-matte-finish-spc-floor-1220-x-181-mm-5-mm-inb55vkt/product'],
+      ['Taupe Brown Matte Finish', '/sp-00108-matte-finish-spc-floor-1220-x-181-mm-5-mm-zer57gdd/product'],
+      ['HDF Forest Oak', '/lf-00332-b-hdf-herringbone-matte-surface-ac5-grade-beaconia-forest-oak-19-x-4-inch-470x95-mm-8-mm/product'],
+    ]),
   },
 ]
 
@@ -112,10 +139,11 @@ export const rooms: Room[] = [
   { key: 'tv', label: 'TV Unit', thumbD: { x: 1445, y: 6394, w: 244 }, thumbM: { x: 266, y: 2968, w: 113, h: 69 }, slides: slides('tv', 1, 10) },
 ]
 
-export const videos = [
-  { alt: 'Pati Patni Interiors Episode 1', src: 'https://materialdepotimages.materialdepot.com/application_image/pati-patni-interiors-ep01.mp4' },
-  { alt: 'Pati Patni Interiors Episode 2', src: 'https://materialdepotimages.materialdepot.com/application_image/pati-patni-interiors-ep02.mp4' },
-  { alt: 'Customer Experience', src: 'https://materialdepotimages.materialdepot.com/application_image/ugc-content-01.mp4' },
-  { alt: 'Home Makeover', src: 'https://materialdepotimages.materialdepot.com/application_image/ugc-content-02.mp4' },
-  { alt: 'Interior Styling', src: 'https://materialdepotimages.materialdepot.com/application_image/ugc-content-03.mp4' },
+// Tiles play in the on-page lightbox. `instagram` holds each tile's post — not linked for now.
+export const videos: { alt: string; src: string; instagram: string }[] = [
+  { alt: 'Pati Patni Interiors Episode 1', src: 'https://materialdepotimages.materialdepot.com/application_image/pati-patni-interiors-ep01.mp4', instagram: 'https://www.instagram.com/p/DYwEnSOBdrw/' },
+  { alt: 'Pati Patni Interiors Episode 2', src: 'https://materialdepotimages.materialdepot.com/application_image/pati-patni-interiors-ep02.mp4', instagram: 'https://www.instagram.com/p/DaiNo9ChRkb/' },
+  { alt: 'Customer Experience', src: 'https://materialdepotimages.materialdepot.com/application_image/ugc-content-01.mp4', instagram: 'https://www.instagram.com/p/Ddsf6UfTh_s/' },
+  { alt: 'Home Makeover', src: 'https://materialdepotimages.materialdepot.com/application_image/ugc-content-02.mp4', instagram: 'https://www.instagram.com/p/Dd8-zyDzDSL/' },
+  { alt: 'Interior Styling', src: 'https://materialdepotimages.materialdepot.com/application_image/ugc-content-03.mp4', instagram: 'https://www.instagram.com/p/DaVEGQYu_aW/' },
 ]

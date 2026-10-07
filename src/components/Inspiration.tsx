@@ -1,9 +1,11 @@
 import { useState } from 'react'
-import { asset, place } from '../utils'
+import { asset, isNear, place } from '../utils'
 import { rooms } from '../data'
 import { SITE_URL } from '../stores'
 import { FitText } from './FitText'
 import { ArrowRight, Chevron, LongArrow } from './Icons'
+
+const GALLERY_URL = `${SITE_URL}/inspiration-gallery?search=louver%20wallpaper`
 
 export function Inspiration() {
   const [roomIndex, setRoomIndex] = useState(0)
@@ -27,7 +29,7 @@ export function Inspiration() {
       <FitText fitM={[88, 320, 2878]} className="ttl rv">Inspiration Gallery</FitText>
       <FitText fitM={[52, 355, 2909]} className="desc rv">Explore 20,000+ design ideas and bring your dream home to life.</FitText>
       <a
-        href={`${SITE_URL}/inspiration-gallery`}
+        href={GALLERY_URL}
         target="_blank"
         rel="noreferrer"
         className="a btn-o btn-insp rv"
@@ -39,7 +41,7 @@ export function Inspiration() {
         Explore the designs <ArrowRight />
       </a>
       <a
-        href={`${SITE_URL}/inspiration-gallery`}
+        href={GALLERY_URL}
         target="_blank"
         rel="noreferrer"
         className="a btn-o btn-gallery rv"
@@ -53,7 +55,7 @@ export function Inspiration() {
 
       <div className="a insp-main" style={place({ x: 806, y: 6080, w: 622, h: 445 }, { x: 22, y: 3044, w: 357, h: 235 })}>
         {room.slides.map((s, i) => (
-          <img key={s} src={asset(s)} alt={`${room.label} inspiration ${i + 1}`} className={i === slide ? 'on' : ''} loading={i === 0 ? 'eager' : 'lazy'} />
+          <img key={s} src={isNear(i, slide, count) ? asset(s) : undefined} alt={`${room.label} inspiration ${i + 1}`} className={i === slide ? 'on' : ''} />
         ))}
         <button type="button" className="insp-arrow prev" aria-label="Previous design" onClick={() => go(-1)}><Chevron /></button>
         <button type="button" className="insp-arrow next" aria-label="Next design" onClick={() => go(1)}><Chevron /></button>

@@ -30,3 +30,9 @@ export function place(d?: Box | null, m?: MBox | null): CSSProperties {
 export const only = (d: unknown, m: unknown) => (d && m ? '' : d ? ' d' : ' m')
 
 export const relayout = () => window.dispatchEvent(new Event('relayout'))
+
+// carousels only load the visible slide and its neighbours (wrapping)
+export const isNear = (i: number, index: number, count: number) => {
+  const d = Math.abs(i - index)
+  return Math.min(d, count - d) <= 1
+}
