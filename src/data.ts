@@ -60,8 +60,8 @@ export const categories: Category[] = [
     price: 26,
     on: 'tile-wallpaper-on',
     off: 'tile-wallpaper-off',
-    tileD: { x: 631, y: 1989, w: 224 },
-    tileM: { x: 11, y: 765, w: 111 },
+    tileD: { x: 648.5, y: 2014, w: 189 }, // same size as the other tiles (the mockup drew it in its selected state)
+    tileM: { x: 19.5, y: 776.6, w: 94 },
     pillD: { x: 660, y: 2246, w: 166, h: 32 },
     pillM: { x: 25, y: 878, w: 83, h: 16 },
     tabW: 152,

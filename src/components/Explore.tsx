@@ -25,11 +25,13 @@ function Cards({ category }: { category: Category }) {
         <div className="panel-track" style={{ transform: `translateX(${-cardLeft(page)}px)` }}>
           {category.cards.map((card, i) => (
             <a key={card.img} href={`${SITE_URL}${card.href}`} target="_blank" rel="noreferrer" className="panel-card" style={{ left: cardLeft(i) }}>
-              <img src={asset(card.img)} alt={card.name} loading="lazy" />
+              <img src={asset(card.img)} alt="" loading="lazy" />
+              <span className="card-name">{card.name}</span>
             </a>
           ))}
           <a href={`${SITE_URL}${category.href}`} target="_blank" rel="noreferrer" className="panel-card" style={{ left: cardLeft(category.cards.length) }}>
-            <img src={asset(`card-${category.key}-explore`)} alt={`Explore more ${category.name}`} loading="lazy" />
+            <img src={asset(`card-${category.key}-explore`)} alt="" loading="lazy" />
+            <span className="card-more">Explore More<span className="sr-only"> {category.name}</span></span>
           </a>
         </div>
       </div>
