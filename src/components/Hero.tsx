@@ -26,6 +26,8 @@ export function Intro() {
 
   return (
     <>
+      <FitText fit={[708, 1360, 454]} fitM={[83.2, 317.5, 173.3]} className="hero-tag">New Walls • New Floors</FitText>
+      <FitText fit={[653, 1412, 513]} fitM={[64, 336.7, 198.7]} className="hero-tag">Zero Renovation Mess</FitText>
       <FitText fit={[587, 1476, 937]} fitM={[33, 365, 353]} className="eyebrow rv">Give your home a fresh look, without the mess.</FitText>
       <p className="a d lead rv" style={{ top: 1017 }}>
         Sit back and relax while we take care of everything from <b>delivery to installation.</b>

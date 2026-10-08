@@ -131,6 +131,9 @@ a, button { color: inherit; text-decoration: none; font: inherit; background: no
 .btn-gallery { color: var(--ink); }
 .btn-gallery svg { width: auto; height: .7em; }
 
+/* hero headline on the navy arch */
+.hero-tag { font-weight: 600; color: #f5d21c; background: linear-gradient(180deg, #fff35c 0%, #f7d51c 55%, #e2bb00 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+
 /* ---------- captions that used to be baked into the backgrounds ---------- */
 .cap-feat { color: #7b3f0c; font-weight: 500; }
 .cap-feat.b { font-weight: 700; }

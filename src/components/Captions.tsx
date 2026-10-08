@@ -79,7 +79,7 @@ const STEPS: Block[] = [
     w: 176.7,
     m: [
       ['We’ll understand your needs and book an', 53, 2019.3],
-      ['appointment at your nearest Experience Centre.', 53.3, 2027],
+      ['appointment at your nearest Experience Centre.', 53.3, 2028.3],
       ['Explore 25,000+ designs in wallpapers,', 53.3, 2078.7],
       ['wall panels and wooden flooring', 53.3, 2087.7],
       ['Get expert guidance and shortlist', 53.3, 2141],
