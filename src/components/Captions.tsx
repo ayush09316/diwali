@@ -8,7 +8,7 @@ type Line = [text: string, x0: number, top: number]
 type Block = { cls: string; ref: string; w: number; d?: Line[]; m?: Line[] }
 
 const FEATURES: Block[] = [
-  { cls: 'cap-feat b', ref: '30,000+', w: 70, d: [['30,000+', 591, 1540]] },
+  { cls: 'cap-feat b', ref: '25,000+', w: 70, d: [['25,000+', 591, 1540]] },
   { cls: 'cap-feat', ref: 'Designs', w: 63, d: [['Designs', 595, 1562]] },
   { cls: 'cap-feat', ref: 'Delivered at', w: 96, d: [['Delivered at', 760, 1541]] },
   { cls: 'cap-feat b', ref: 'Your Doorstep', w: 119, d: [['Your Doorstep', 748, 1563]] },

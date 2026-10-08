@@ -13,7 +13,7 @@ export function WhyVisit() {
       {whyItems.map((w) => (
         <Fragment key={w.img}>
           <Zoom shaped className="a" style={place(w.d, w.m)} src={asset(w.img)} />
-          <span className="a wpill" style={place(w.pill, w.pillM)} data-fsw="170" data-fsw-m="83" data-fst="30,000 + Designs">
+          <span className="a wpill" style={place(w.pill, w.pillM)} data-fsw="170" data-fsw-m="83" data-fst="25,000 + Designs">
             {w.label.map((l, i) => (
               <Fragment key={i}>
                 {i > 0 && <br />}
