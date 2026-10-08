@@ -34,14 +34,14 @@ export function Intro() {
         Sit back and relax while we take care of everything from <b>delivery to installation.</b>
       </p>
       <p className="a d lead rv" style={{ top: 1062 }}>
-        Plus, <b>get a 1-year warranty installation.</b>
+        Plus, <b>get a 1-year warranty on installation.</b>
       </p>
       <p className="a m lead rv" style={{ top: 382 }}>Sit back and relax while we take care</p>
       <p className="a m lead rv" style={{ top: 397 }}>
         of everything from <b>delivery to installation.</b>
       </p>
       <p className="a m lead rv" style={{ top: 412 }}>
-        Plus, get a <b>1-year warranty installation.</b>
+        Plus, get a <b>1-year warranty on installation.</b>
       </p>
       <button
         type="button"
