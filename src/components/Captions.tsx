@@ -1,3 +1,4 @@
+import { asset, only, place } from '../utils'
 import { FitText } from './FitText'
 
 // Copy that used to be baked into the page backgrounds, now live text so it stays sharp.
@@ -107,5 +108,23 @@ function Lines({ blocks }: { blocks: Block[] }) {
   )
 }
 
-export const FeatureCaptions = () => <Lines blocks={FEATURES} />
+// Feature-strip icons (sharp 3x exports; the blurry ones were erased from the backgrounds).
+// Boxes match where each icon sat in the mockup; mobile shows the first three.
+type IconBox = { x: number; y: number; w: number; h: number }
+const ICONS: { name: string; alt: string; d: IconBox; m?: IconBox }[] = [
+  { name: 'designs', alt: 'Designs', d: { x: 579, y: 1432, w: 96, h: 93 }, m: { x: 68, y: 545, w: 40, h: 38.75 } },
+  { name: 'truck', alt: 'Delivery', d: { x: 760, y: 1432, w: 96, h: 92 }, m: { x: 170, y: 545, w: 40, h: 38.33 } },
+  { name: 'clock', alt: 'Quick installation', d: { x: 947, y: 1432, w: 88, h: 92 }, m: { x: 277.7, y: 545, w: 39.5, h: 41.3 } },
+  { name: 'hammer', alt: 'No renovation', d: { x: 1128, y: 1432, w: 87, h: 92 } },
+  { name: 'shield', alt: 'Warranty', d: { x: 1325, y: 1432, w: 93, h: 90 } },
+]
+
+export const FeatureCaptions = () => (
+  <>
+    {ICONS.map((i) => (
+      <img key={i.name} className={`a${only(i.d, i.m)} feat-icon`} style={place(i.d, i.m)} src={asset(`feat-${i.name}`)} alt="" aria-hidden />
+    ))}
+    <Lines blocks={FEATURES} />
+  </>
+)
 export const StepCaptions = () => <Lines blocks={STEPS} />
