@@ -65,17 +65,27 @@ export function StickyBook() {
   useEffect(() => {
     const hero = document.querySelector('.stage .book-btn')
     if (!hero) return
-    // show once the button has left through the top; hide only when it is fully back in view,
-    // so the return flight always lands on a visible button
-    const io = new IntersectionObserver(
-      ([e]) => {
-        if (!e.isIntersecting && e.boundingClientRect.top < 0) setShow(true)
-        else if (e.intersectionRatio === 1) setShow(false)
-      },
-      { threshold: [0, 1] },
-    )
-    io.observe(hero)
-    return () => io.disconnect()
+    // Show once the button has scrolled out through the top; hide once its top edge is back in
+    // view (or it is below the fold, e.g. on a short window). Checked on every scroll frame, so
+    // a fast scroll can't skip the hide the way threshold-based IntersectionObserver callbacks could.
+    let raf = 0
+    const check = () => {
+      raf = 0
+      const r = hero.getBoundingClientRect()
+      if (r.bottom < 0) setShow(true)
+      else if (r.top >= 0) setShow(false)
+    }
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(check)
+    }
+    check()
+    addEventListener('scroll', onScroll, { passive: true })
+    addEventListener('resize', onScroll)
+    return () => {
+      cancelAnimationFrame(raf)
+      removeEventListener('scroll', onScroll)
+      removeEventListener('resize', onScroll)
+    }
   }, [])
 
   useLayoutEffect(() => {
@@ -90,6 +100,8 @@ export function StickyBook() {
     // hero button far off-screen (e.g. a jump via a link): just fade, no long flight
     const r = hero.getBoundingClientRect()
     if (r.bottom < -innerHeight || r.top > 2 * innerHeight) return
+    // going back but the button isn't fully on screen (short window): just fade out
+    if (!show && r.bottom > innerHeight) return
     // fly down-then-right when showing, left-then-up when hiding; the hero button is hidden
     // while the pill is away from it and fades back in as the pill lands on it
     const t0 = performance.now()
