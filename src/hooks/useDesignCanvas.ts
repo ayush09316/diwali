@@ -1,7 +1,7 @@
 import { useEffect, useSyncExternalStore, type RefObject } from 'react'
 
-export const DESKTOP_WIDTH = 2064
-export const MOBILE_WIDTH = 402
+const DESKTOP_WIDTH = 2064
+const MOBILE_WIDTH = 402
 export const DESKTOP_QUERY = '(min-width: 768px)'
 
 const ctx = document.createElement('canvas').getContext('2d')!

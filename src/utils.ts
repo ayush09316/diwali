@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react'
 
 export type Box = { x: number; y: number; w: number; h?: number }
-export type MBox = Box & { s?: number }
+type MBox = Box & { s?: number }
 
 // Standalone HTML export embeds images in window.__ASSETS; the dev/prod builds fall back to /assets.
 export const asset = (name: string) => {

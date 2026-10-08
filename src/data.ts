@@ -30,7 +30,7 @@ export const transformations: Record<'wallpaper' | 'panel' | 'flooring', Transfo
   ],
 }
 
-export type CategoryKey = 'wallpaper' | 'panel' | 'flooring'
+type CategoryKey = 'wallpaper' | 'panel' | 'flooring'
 
 export type Category = {
   key: CategoryKey
@@ -121,7 +121,7 @@ export const categories: Category[] = [
   },
 ]
 
-export type WhyItem = { img: string; label: string[]; d: Box; m: Box; pill: Box; pillM: Box }
+type WhyItem = { img: string; label: string[]; d: Box; m: Box; pill: Box; pillM: Box }
 export const whyItems: WhyItem[] = [
   { img: 'why1', label: ['30,000 + Designs'], d: { x: 264, y: 5449, w: 299 }, m: { x: 14, y: 2404, w: 160 }, pill: { x: 268, y: 5762, w: 285, h: 76 }, pillM: { x: 16, y: 2561, w: 154, h: 33 } },
   { img: 'why2', label: ['Explore, touch & feel', 'in-person'], d: { x: 665, y: 5449, w: 299 }, m: { x: 230, y: 2404, w: 160 }, pill: { x: 666, y: 5763, w: 288, h: 76 }, pillM: { x: 232, y: 2561, w: 154, h: 33 } },
@@ -129,7 +129,7 @@ export const whyItems: WhyItem[] = [
   { img: 'why4', label: ['Visualize before you buy'], d: { x: 1465, y: 5451, w: 299 }, m: { x: 228, y: 2615, w: 160 }, pill: { x: 1472, y: 5761, w: 288, h: 77 }, pillM: { x: 232, y: 2773, w: 154, h: 33 } },
 ]
 
-export type Room = { key: string; label: string; thumbD: Box; thumbM: Box; slides: string[] }
+type Room = { key: string; label: string; thumbD: Box; thumbM: Box; slides: string[] }
 const slides = (key: string, from: number, to: number) =>
   Array.from({ length: to - from + 1 }, (_, i) => `slide-${key}-${from + i}.webp`)
 
