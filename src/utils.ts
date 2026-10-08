@@ -3,8 +3,8 @@ import type { CSSProperties } from 'react'
 export type Box = { x: number; y: number; w: number; h?: number }
 type MBox = Box & { s?: number }
 
-// Images are served from the Cloudflare R2 image bucket (uploaded with the same file names as
-// public/assets). Set VITE_ASSET_BASE=/assets/ to serve the local copies instead.
+// Images live in the Cloudflare R2 image bucket under application_image/diwali-makeover/ (they are
+// not in this repo; git history before this change has the originals). VITE_ASSET_BASE overrides.
 const ASSET_BASE = (import.meta.env.VITE_ASSET_BASE as string | undefined) ??
   'https://materialdepotimages.materialdepot.com/application_image/diwali-makeover/'
 
