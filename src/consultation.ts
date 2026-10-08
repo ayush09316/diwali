@@ -1,7 +1,8 @@
 // "Book Free Online Consultation" lead — same endpoint as materialdepot.com's consultation modal
 // (MaterialDepotDjangoBackend users/api/sales/views.py BookConsultationView → Kylas lead).
-// It currently reads only `contact`, `city` and `banner_type`; name/pincode/products are sent
-// along so they are captured as soon as the backend stores them.
+// city goes to the Kylas lead; name to the user/lead name; pincode and products are saved as the
+// Locality and Interested Categories user properties (like the CRM store-visit form), and products
+// also set the lead's cfCategoriesOfInterest.
 const API = (import.meta.env.VITE_API_URL as string | undefined) ?? 'https://api.materialdepot.com/apiV1'
 
 export const CITIES = [
