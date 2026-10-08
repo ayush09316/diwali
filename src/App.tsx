@@ -19,6 +19,7 @@ export default function App() {
   useReveal(stageRef)
 
   return (
+    <div className="stage-fit">
     <main className="stage" ref={stageRef}>
       <h1 className="sr-only">Diwali Makeover Fest — Give your home a Diwali makeover with wallpaper, wall panels and wooden flooring</h1>
       <Glows />
@@ -35,5 +36,6 @@ export default function App() {
       <Footer />
       <StickyBook />
     </main>
+    </div>
   )
 }

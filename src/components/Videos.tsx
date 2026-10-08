@@ -5,8 +5,10 @@ import { videos } from '../data'
 import { getImageUrl } from '../helpers/image_helper'
 import { FitText } from './FitText'
 
-// desktop left offsets of each tile inside the strip
-const VIDEO_X = [0, 297, 595, 892, 1195]
+// Desktop: all tiles share the 1466px strip with a 26px gap (mobile scrolls horizontally)
+const STRIP_W = 1466
+const GAP = 26
+const TILE_W = (STRIP_W - GAP * (videos.length - 1)) / videos.length
 
 const Play = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -37,13 +39,13 @@ export function Videos() {
   return (
     <>
       <FitText as="h2" fit={[601, 1423, 2973]} fitM={[58, 359, 1198]} className="h rv" style={{ color: 'var(--maroon)' }}>See The Transformation Live</FitText>
-      <div className="a vids" style={place({ x: 280, y: 3091, w: 1466, h: 347 }, { x: 0, y: 1232, w: 402, h: 221 })}>
+      <div className="a vids" style={place({ x: 280, y: 3091, w: STRIP_W, h: 347 }, { x: 0, y: 1232, w: 402, h: 221 })}>
         {videos.map((v, i) => (
           <button
             key={v.src}
             type="button"
             className="vid"
-            style={{ '--vx': VIDEO_X[i] } as CSSProperties}
+            style={{ '--vx': i * (TILE_W + GAP), '--vw': TILE_W } as CSSProperties}
             aria-label={`Play ${v.alt}`}
             onClick={() => setOpen(i)}
             onMouseEnter={(e) => e.currentTarget.querySelector('video')?.play().catch(() => {})}

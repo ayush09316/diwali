@@ -44,7 +44,14 @@ export function useDesignCanvas(stageRef: RefObject<HTMLElement>) {
     const layout = () => {
       const isDesktop = desktop.matches
       const width = document.documentElement.clientWidth
-      stage.style.zoom = String(isDesktop ? Math.min(width / DESKTOP_WIDTH, 1.25) : width / MOBILE_WIDTH)
+      const scale = isDesktop ? Math.min(width / DESKTOP_WIDTH, 1.25) : width / MOBILE_WIDTH
+      // Scaled with transform, not zoom: older iOS Safari doesn't shrink text under zoom, which
+      // broke everything once the factor was far from 1 (e.g. landscape). The wrapper takes the
+      // scaled size so the page scrolls and centres correctly.
+      stage.style.transform = `scale(${scale})`
+      const fit = stage.parentElement!
+      fit.style.width = `${stage.offsetWidth * scale}px`
+      fit.style.height = `${stage.offsetHeight * scale}px`
       stage.querySelectorAll<HTMLElement>('[data-fit],[data-fit-m],[data-fsw],[data-fsw-m]').forEach((el) => {
         if (el.offsetParent === null && getComputedStyle(el).position !== 'fixed') return
         const fit = !isDesktop && el.dataset.fitM ? el.dataset.fitM : el.dataset.fit
@@ -56,11 +63,15 @@ export function useDesignCanvas(stageRef: RefObject<HTMLElement>) {
 
     layout()
     document.fonts?.ready.then(layout)
+    // iOS can report the old width on the first resize after a rotation; lay out again once settled
+    const settle = () => setTimeout(layout, 300)
     window.addEventListener('resize', layout)
+    window.addEventListener('orientationchange', settle)
     window.addEventListener('relayout', layout)
     desktop.addEventListener('change', layout)
     return () => {
       window.removeEventListener('resize', layout)
+      window.removeEventListener('orientationchange', settle)
       window.removeEventListener('relayout', layout)
       desktop.removeEventListener('change', layout)
     }

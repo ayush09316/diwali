@@ -4,7 +4,9 @@
 //   generate_lead    — the consultation was booked (after OTP)
 // Per destination this mirrors the main site's loggers:
 //   GA4 / Meta pixel: event without PII params (Meta gets PII only as hashed advanced matching)
-//   Mixpanel / MoEngage: event with all params (as the main site does)
+//   Mixpanel: event with all params (as the main site does)
+// MoEngage is not loaded here: its web SDK shows on-site popups. The backend still sends the
+// lead to MoEngage when the form is submitted.
 //   Pinterest: book_appointment -> 'schedule'      OpenAI: generate_lead -> 'appointment_scheduled'
 // Wigzo and the CRM /track-event/ logger do nothing for these events on a logged-out page.
 import mixpanel from 'mixpanel-browser'
@@ -25,7 +27,6 @@ type Win = Window & {
   fbq?: Fn
   pintrk?: Fn
   oaiq?: Fn
-  Moengage?: { track_event?: Fn; identifyUser?: Fn; add_mobile?: Fn; add_user_attribute?: Fn }
 }
 const w = () => window as Win
 
@@ -57,7 +58,6 @@ export function track(event: string, params: Params = {}) {
   safely(() => w().gtag?.('event', event, safe))
   safely(() => w().fbq?.('trackCustom', event, safe))
   safely(() => mixpanelReady && mixpanel.track(event, defined(params)))
-  safely(() => w().Moengage?.track_event?.(event, defined(params)))
   if (event === Events.bookAppointment) safely(() => w().pintrk?.('track', 'schedule', { lead_type: 'appointment' }))
   if (event === Events.bookAppointmentSuccess) safely(() => w().oaiq?.('measure', 'appointment_scheduled', { type: 'customer_action' }))
 }
@@ -84,12 +84,6 @@ export async function identify(lead: Lead) {
     if (!mixpanelReady) return
     if (id) mixpanel.identify(id)
     mixpanel.people.set(traits)
-  })
-  safely(() => {
-    const moe = w().Moengage
-    if (id) moe?.identifyUser?.(id)
-    moe?.add_mobile?.(phone)
-    Object.entries(traits).forEach(([k, v]) => moe?.add_user_attribute?.(k, v))
   })
   // Google enhanced conversions (sticky for the generate_lead that follows)
   safely(() =>

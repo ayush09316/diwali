@@ -139,11 +139,12 @@ export const rooms: Room[] = [
   { key: 'tv', label: 'TV Unit', thumbD: { x: 1445, y: 6394, w: 244 }, thumbM: { x: 266, y: 2968, w: 113, h: 69 }, slides: slides('tv', 1, 10) },
 ]
 
-// Tiles play in the on-page lightbox. `instagram` holds each tile's post — not linked for now.
-export const videos: { alt: string; src: string; instagram: string }[] = [
-  { alt: 'Pati Patni Interiors Episode 1', src: 'https://materialdepotimages.materialdepot.com/application_image/pati-patni-interiors-ep01.mp4', instagram: 'https://www.instagram.com/p/DYwEnSOBdrw/' },
-  { alt: 'Pati Patni Interiors Episode 2', src: 'https://materialdepotimages.materialdepot.com/application_image/pati-patni-interiors-ep02.mp4', instagram: 'https://www.instagram.com/p/DaiNo9ChRkb/' },
-  { alt: 'Customer Experience', src: 'https://materialdepotimages.materialdepot.com/application_image/ugc-content-01.mp4', instagram: 'https://www.instagram.com/p/Ddsf6UfTh_s/' },
-  { alt: 'Home Makeover', src: 'https://materialdepotimages.materialdepot.com/application_image/ugc-content-02.mp4', instagram: 'https://www.instagram.com/p/Dd8-zyDzDSL/' },
-  { alt: 'Interior Styling', src: 'https://materialdepotimages.materialdepot.com/application_image/ugc-content-03.mp4', instagram: 'https://www.instagram.com/p/DaVEGQYu_aW/' },
+// Tiles play in the on-page lightbox.
+export const videos: { alt: string; src: string }[] = [
+  { alt: 'Living room — Indian wallpaper makeover', src: 'https://materialdepotimages.materialdepot.com/application_image/Living-Room-Indian-Wallpaper-Makeover.mp4' },
+  { alt: 'Living room makeover with wall mouldings', src: 'https://materialdepotimages.materialdepot.com/application_image/living-room-makeover-withwallmouldings.mp4' },
+  { alt: 'Bedroom makeover — wooden flooring installation', src: 'https://materialdepotimages.materialdepot.com/application_image/Bedroom-Makeover-Wooden-Flooring-Installation.mp4' },
+  { alt: 'Home makeover — TV unit and wallpaper corridor', src: 'https://materialdepotimages.materialdepot.com/application_image/Home-Makeover-TV-Unit-And-Wallpaper-Corridor.mp4' },
+  { alt: 'Couple home upgrade — store visit review', src: 'https://materialdepotimages.materialdepot.com/application_image/Couple-Home-Upgrade-Store-Visit-Review.mp4' },
+  { alt: 'Creator store visit — arch niche wall makeover', src: 'https://materialdepotimages.materialdepot.com/application_image/Creator-Store-Visit-Arch-Niche-Wall-Makeover.mp4' },
 ]
