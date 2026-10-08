@@ -193,12 +193,14 @@ export function ConsultModal({ onClose, position }: { onClose: () => void; posit
   const [W, H] = L.size
   return createPortal(
     <div className="consult-overlay" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
+      {/* scaled with transform, not zoom: older iOS Safari doesn't shrink text under zoom */}
+      <div className="consult-fit" style={{ width: W * scale, height: H * scale }}>
       <div
         className="consult"
         role="dialog"
         aria-modal="true"
         aria-labelledby="consult-title"
-        style={{ width: W, height: H, zoom: scale, backgroundImage: `url(${asset(L.bg)})` }}
+        style={{ width: W, height: H, transform: `scale(${scale})`, backgroundImage: `url(${asset(L.bg)})` }}
       >
         <h2 id="consult-title" className="sr-only">Book Free Online Consultation</h2>
         <button type="button" className="consult-close" aria-label="Close" onClick={onClose}>×</button>
@@ -293,6 +295,7 @@ export function ConsultModal({ onClose, position }: { onClose: () => void; posit
             )}
           </form>
         )}
+      </div>
       </div>
     </div>,
     document.body,

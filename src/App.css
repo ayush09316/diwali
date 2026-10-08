@@ -347,7 +347,8 @@ a, button { color: inherit; text-decoration: none; font: inherit; background: no
 
 /* ---------- consultation modal (sized in design-frame px, scaled to fit) ---------- */
 .consult-overlay { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; background: rgba(24, 14, 4, .55); animation: fadeIn .25s ease; }
-.consult { position: relative; overflow: hidden; border-radius: 10px; background: #fdf0c4 center / cover no-repeat; box-shadow: 0 24px 60px rgba(0, 0, 0, .35); color: var(--ink); animation: popIn .3s cubic-bezier(.2, .7, .2, 1); }
+.consult-fit { position: relative; animation: popIn .3s cubic-bezier(.2, .7, .2, 1); }
+.consult { position: absolute; left: 0; top: 0; transform-origin: 0 0; overflow: hidden; border-radius: 10px; background: #fdf0c4 center / cover no-repeat; box-shadow: 0 24px 60px rgba(0, 0, 0, .35); color: var(--ink); }
 .consult-close { position: absolute; top: 8px; right: 10px; z-index: 2; width: 32px; height: 32px; border-radius: 50%; background: rgba(255, 255, 255, .55); color: var(--brown); font-size: 26px; line-height: 1; transition: background .2s; }
 .consult-close:hover { background: #fff; }
 .consult-group { border: 0; margin: 0; padding: 0; min-width: 0; }
