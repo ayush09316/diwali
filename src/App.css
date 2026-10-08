@@ -71,7 +71,7 @@ a, button { color: inherit; text-decoration: none; font: inherit; background: no
   .stage .tab + .tab + .tab { margin-left: 7px; }
   .stage .ba-pane { border-radius: 15px; }
   .wpill { border-radius: 10px; }
-  .vids { gap: 10px; padding: 0 42px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 0 42px; scrollbar-width: none; }
+  .vids { gap: 10px; padding: 0 12px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 0 12px; scrollbar-width: none; }
   .vids::-webkit-scrollbar { display: none; }
   .vid { flex: 0 0 120px; border-radius: 6px; scroll-snap-align: start; }
   .vid .play { width: 29px; height: 29px; }
