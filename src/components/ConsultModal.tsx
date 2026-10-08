@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type CSSProperties, type FormEvent } from 
 import { createPortal } from 'react-dom'
 import { asset } from '../utils'
 import { useIsDesktop } from '../hooks/useDesignCanvas'
+import { Events, track } from '../analytics'
 import { bookConsultation, CITIES, OtpError, OTP_LENGTH, PRODUCTS, resendOtp, sendOtp, verifyOtp } from '../consultation'
 
 type Rect = [x: number, y: number, w: number, h: number]
@@ -84,7 +85,8 @@ function useFitScale([w, h]: [number, number]) {
   return scale
 }
 
-export function ConsultModal({ onClose }: { onClose: () => void }) {
+// position: which Book button opened the form (sent with the analytics events)
+export function ConsultModal({ onClose, position }: { onClose: () => void; position: string }) {
   const L = useIsDesktop() ? DESKTOP : MOBILE
   const scale = useFitScale(L.size)
   const [values, setValues] = useState<Record<FieldKey, string>>({ name: '', contact: '', pincode: '' })
@@ -155,6 +157,14 @@ export function ConsultModal({ onClose }: { onClose: () => void }) {
     }
     try {
       await bookConsultation({ ...values, name: values.name.trim(), city, products })
+      track(Events.bookAppointmentSuccess, {
+        type: 'designer_consultation',
+        position,
+        location: 'diwali_makeover',
+        phone: values.contact,
+        fName: values.name.trim(),
+        pincode: values.pincode,
+      })
       setStatus('done')
     } catch {
       setOtpError('Something went wrong — please try again or call +91 81215 23945.')

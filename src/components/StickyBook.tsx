@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { ConsultModal } from './ConsultModal'
+import { Events, track } from '../analytics'
 import { DESKTOP_QUERY } from '../hooks/useDesignCanvas'
 
 const FLY_MS = 900
@@ -98,11 +99,14 @@ export function StickyBook() {
         aria-haspopup="dialog"
         tabIndex={show ? 0 : -1}
         aria-hidden={!show}
-        onClick={() => setOpen(true)}
+        onClick={() => {
+          track(Events.bookAppointment, { type: 'designer_consultation', position: 'sticky' })
+          setOpen(true)
+        }}
       >
         Book Free Online Consultation
       </button>
-      {open && <ConsultModal onClose={close} />}
+      {open && <ConsultModal onClose={close} position="sticky" />}
     </>,
     document.body,
   )

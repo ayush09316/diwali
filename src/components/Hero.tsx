@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react'
 import { place } from '../utils'
 import { FitText } from './FitText'
 import { ConsultModal } from './ConsultModal'
+import { Events, track } from '../analytics'
 
 const glows = [
   { d: { x: 177, y: 625, w: 150, h: 150 }, m: { x: 5, y: 175, w: 50, h: 50 }, delay: '.3s' },
@@ -49,11 +50,14 @@ export function Intro() {
         data-fsw="681"
         data-fsw-m="245"
         aria-haspopup="dialog"
-        onClick={() => setConsultOpen(true)}
+        onClick={() => {
+          track(Events.bookAppointment, { type: 'designer_consultation', position: 'hero' })
+          setConsultOpen(true)
+        }}
       >
         Book Free Online Consultation
       </button>
-      {consultOpen && <ConsultModal onClose={closeConsult} />}
+      {consultOpen && <ConsultModal onClose={closeConsult} position="hero" />}
     </>
   )
 }

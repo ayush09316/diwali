@@ -3,6 +3,7 @@ import { place } from '../utils'
 import { getImageUrl } from '../helpers/image_helper'
 import { CITIES, SITE_URL, STORES, type City, type Store } from '../stores'
 import { ConsultModal } from './ConsultModal'
+import { Events, track } from '../analytics'
 import { Chat, Chevron, Clock, Eye, Home, Send, Shop, Star } from './Icons'
 
 const AUTO_ADVANCE_MS = 3000
@@ -117,7 +118,10 @@ export function Stores() {
           ))}
         </div>
         <div className="acts">
-          <button type="button" className="book" aria-haspopup="dialog" onClick={() => setConsultOpen(true)}>Book Appointment <i>›</i></button>
+          <button type="button" className="book" aria-haspopup="dialog" onClick={() => {
+          track(Events.bookAppointment, { type: 'designer_consultation', position: 'store_finder' })
+          setConsultOpen(true)
+        }}>Book Appointment <i>›</i></button>
           <a href={selected.direction} target="_blank" rel="noreferrer" className="dir">Directions <Send /></a>
         </div>
         <div className="meta">
@@ -126,7 +130,7 @@ export function Stores() {
           <div><Eye /><p><b>Live</b>Visualization</p></div>
         </div>
       </div>
-      {consultOpen && <ConsultModal onClose={closeConsult} />}
+      {consultOpen && <ConsultModal onClose={closeConsult} position="store_finder" />}
     </>
   )
 }
