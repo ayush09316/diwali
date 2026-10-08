@@ -140,7 +140,8 @@ a, button { color: inherit; text-decoration: none; font: inherit; background: no
 .sticky-book.on { opacity: 1; transform: none; pointer-events: auto; }
 .sticky-book.on:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(27, 35, 50, .38); }
 @media (min-width: 768px) {
-  .sticky-book { right: 32px; bottom: 32px; padding: 15px 30px; font-size: 18px; }
+  /* desktop flies in from the hero button (StickyBook.tsx), so no slide offset here */
+  .sticky-book { right: 32px; bottom: 32px; padding: 15px 30px; font-size: 18px; transform: none; transform-origin: 0 0; }
 }
 
 /* hero headline on the navy arch */
