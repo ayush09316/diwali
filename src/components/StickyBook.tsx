@@ -31,6 +31,29 @@ function lTransform(pill: HTMLElement, hero: DOMRect, t: number) {
 // Floating "Book Free Online Consultation" pill. On desktop, when the hero's Book button scrolls
 // out of view the pill flies from it into the bottom-right corner, and flies back as it returns.
 // Portalled to <body> so it sits outside the zoomed design canvas at a real, readable size.
+const GOLD = '#d9a93f'
+
+const Diya = () => (
+  <svg className="sticky-orn left" viewBox="0 0 40 56" fill="none" stroke={GOLD} strokeWidth="1.6" strokeLinecap="round">
+    <path d="M20 0v14" />
+    <path d="M20 16c-3 4-4 7-4 10a4 4 0 0 0 8 0c0-3-1-6-4-10z" fill={GOLD} fillOpacity=".35" />
+    <path d="M4 36h32c-1 9-8 15-16 15S5 45 4 36z" fill={GOLD} fillOpacity=".55" />
+    <path d="M8 36c3 3 8 4 12 4s9-1 12-4" />
+  </svg>
+)
+
+const Flower = () => (
+  <svg className="sticky-orn right" viewBox="0 0 56 64" fill="none" stroke={GOLD} strokeWidth="1.5">
+    <path d="M28 0v10" strokeLinecap="round" />
+    <g transform="translate(28 34)">
+      {[0, 45, 90, 135, 180, 225, 270, 315].map((a) => (
+        <path key={a} d="M0-6C-4-12-4-18 0-22C4-18 4-12 0-6z" transform={`rotate(${a})`} />
+      ))}
+      <circle r="5" fill={GOLD} fillOpacity=".4" />
+    </g>
+  </svg>
+)
+
 export function StickyBook() {
   const [show, setShow] = useState(false)
   const [open, setOpen] = useState(false)
@@ -92,6 +115,11 @@ export function StickyBook() {
 
   return createPortal(
     <>
+      {/* phones: full-width cream bar with diya / flower ornaments (CSS hides it on desktop) */}
+      <div className={`sticky-bar${show && !open ? ' on' : ''}`} aria-hidden>
+        <Diya />
+        <Flower />
+      </div>
       <button
         ref={pill}
         type="button"
