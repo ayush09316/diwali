@@ -56,7 +56,7 @@ export function Explore() {
         {categories.map((c) => {
           const on = c.key === active.key
           return (
-            <button key={c.key} type="button" role="tab" aria-selected={on} className={`tab${on ? ' on' : ''}`} style={{ width: on ? undefined : c.tabW }} onClick={() => setActive(c)}>
+            <button key={c.key} type="button" role="tab" aria-selected={on} className={`tab${on ? ' on' : ''}`} style={{ width: c.tabW }} onClick={() => setActive(c)}>
               {c.name}
             </button>
           )

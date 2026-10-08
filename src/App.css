@@ -69,7 +69,6 @@ a, button { color: inherit; text-decoration: none; font: inherit; background: no
   .btn-gallery { padding-left: 9px; }
   .stage .tabs { gap: 31px; }
   .stage .tab + .tab + .tab { margin-left: 7px; }
-  .stage .tab.on { font-size: 31.6px; }
   .stage .ba-pane { border-radius: 15px; }
   .wpill { border-radius: 10px; }
   .vids { gap: 10px; padding: 0 42px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 0 42px; scrollbar-width: none; }
@@ -180,14 +179,15 @@ a, button { color: inherit; text-decoration: none; font: inherit; background: no
 .round-arrow:hover { filter: brightness(1.06); transform: scale(1.08); }
 
 /* ---------- explore ---------- */
-.tabs { display: flex; align-items: center; gap: 34px; }
+.tabs { display: flex; align-items: center; justify-content: center; gap: 34px; }
 .tab + .tab + .tab { margin-left: 5px; }
 .tab {
   height: 30px; padding: 0 0 2px; border: 1.5px solid #373e47; border-radius: 999px;
   background: #fdf7d7; color: var(--ink); font-size: 21.6px; font-weight: 500; white-space: nowrap;
   transition: background .3s, color .3s;
 }
-.tab.on { height: 44px; padding: 0 45px; border-color: var(--ink); background: var(--ink); color: #fff; font-size: 30.7px; }
+/* selected tab keeps its size; only the colours change */
+.tab.on { border-color: var(--ink); background: var(--ink); color: #fff; }
 .explore-title { font-weight: 700; color: var(--brown); }
 .explore-lead { font-weight: 600; }
 .explore-clip { overflow: hidden; }

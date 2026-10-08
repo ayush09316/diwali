@@ -43,7 +43,7 @@ export type Category = {
   tileM: Box
   pillD: Box
   pillM: Box
-  tabW: number // inactive Explore tab width (desktop)
+  tabW: number // Explore tab width (desktop units)
   cards: Card[]
 }
 
