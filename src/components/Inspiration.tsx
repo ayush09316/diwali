@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { asset, isNear, place } from '../utils'
 import { rooms } from '../data'
 import { SITE_URL } from '../stores'
@@ -13,6 +13,22 @@ export function Inspiration() {
   const room = rooms[roomIndex]
   const count = room.slides.length
   const go = (step: number) => setSlide((s) => (s + step + count) % count)
+
+  // Horizontal swipe on the main image flips slides (vertical drags still scroll the page)
+  const touch = useRef<{ x: number; y: number } | null>(null)
+  const onTouchStart = (e: React.TouchEvent) => {
+    const t = e.touches[0]
+    touch.current = { x: t.clientX, y: t.clientY }
+  }
+  const onTouchEnd = (e: React.TouchEvent) => {
+    const start = touch.current
+    touch.current = null
+    if (!start) return
+    const t = e.changedTouches[0]
+    const dx = t.clientX - start.x
+    const dy = t.clientY - start.y
+    if (Math.abs(dx) > 30 && Math.abs(dx) > Math.abs(dy)) go(dx < 0 ? 1 : -1)
+  }
 
   const pickRoom = (i: number) => {
     setRoomIndex(i)
@@ -53,7 +69,7 @@ export function Inspiration() {
         Explore Inspiration Gallery <LongArrow />
       </a>
 
-      <div className="a insp-main" style={place({ x: 806, y: 6080, w: 622, h: 445 }, { x: 22, y: 3044, w: 357, h: 235 })}>
+      <div className="a insp-main" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} style={place({ x: 806, y: 6080, w: 622, h: 445 }, { x: 22, y: 3044, w: 357, h: 235 })}>
         {room.slides.map((s, i) => (
           <img key={s} src={isNear(i, slide, count) ? asset(s) : undefined} alt={`${room.label} inspiration ${i + 1}`} className={i === slide ? 'on' : ''} />
         ))}

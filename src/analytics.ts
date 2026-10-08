@@ -14,6 +14,7 @@ import mixpanel from 'mixpanel-browser'
 export const Events = {
   bookAppointment: 'book_appointment',
   bookAppointmentSuccess: 'generate_lead',
+  callClick: 'call_click',
 } as const
 
 const PIXEL_ID = '552113979128378'

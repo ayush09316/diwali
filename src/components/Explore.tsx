@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { asset, place, relayout } from '../utils'
 import { categories, type Category } from '../data'
 import { SITE_URL } from '../stores'
@@ -12,17 +12,26 @@ const cardLeft = (i: number) => Math.round(i * PITCH)
 
 function Cards({ category }: { category: Category }) {
   // Arrows move one card at a time; the last stop ends with Explore More in the final slot
-  const visible = useIsDesktop() ? 5 : 3
+  // On mobile the strip is a native horizontal scroller (thumb swipe); arrows scroll it
+  const desktop = useIsDesktop()
+  const visible = desktop ? 5 : 3
   const [page, setPage] = useState(0)
+  const clip = useRef<HTMLDivElement>(null)
   const stops = Math.max(1, category.cards.length + 1 - visible + 1)
-  const go = (step: number) => setPage((p) => (p + step + stops) % stops)
+  const go = (step: number) => {
+    const el = clip.current
+    if (desktop || !el) return setPage((p) => (p + step + stops) % stops)
+    const max = el.scrollWidth - el.clientWidth
+    const atEnd = step > 0 ? el.scrollLeft >= max - 2 : el.scrollLeft <= 2
+    el.scrollTo({ left: atEnd ? (step > 0 ? 0 : max) : el.scrollLeft + step * PITCH, behavior: 'smooth' })
+  }
 
   useEffect(() => setPage(0), [visible])
 
   return (
     <>
-      <div className="a explore-clip" style={place({ x: 328, y: 3866, w: 1359, h: 334 }, { x: 28.1, y: 1623, w: 343.6, h: 140.3, s: 0.42 })}>
-        <div className="panel-track" style={{ transform: `translateX(${-cardLeft(page)}px)` }}>
+      <div ref={clip} className={`a explore-clip${desktop ? '' : ' swipe'}`} style={place({ x: 328, y: 3866, w: 1359, h: 334 }, { x: 28.1, y: 1623, w: 343.6, h: 140.3, s: 0.42 })}>
+        <div className="panel-track" style={{ width: cardLeft(category.cards.length + 1), transform: desktop ? `translateX(${-cardLeft(page)}px)` : undefined }}>
           {category.cards.map((card, i) => (
             <a key={card.img} href={`${SITE_URL}${card.href}`} target="_blank" rel="noreferrer" className="panel-card" style={{ left: cardLeft(i) }}>
               <img src={asset(card.img)} alt="" loading="lazy" />
@@ -43,7 +52,8 @@ function Cards({ category }: { category: Category }) {
 
 export function Explore() {
   const [active, setActive] = useState(categories[0])
-  const price = active.price ? `₹${active.price}/sq ft` : active.name
+  const unit = active.unit ?? 'sq ft'
+  const price = active.price ? `₹${active.price}/${unit}` : active.name
 
   useEffect(() => {
     relayout()
@@ -63,7 +73,7 @@ export function Explore() {
         })}
       </div>
       <FitText fit={[336, 758, 3793]} refText="Starting at ₹ 26/sq ft" className="explore-title" key={`title-${active.key}`}>
-        {active.price ? <>Starting at ₹ {active.price}/sq ft</> : active.name}
+        {active.price ? <>Starting at ₹ {active.price}/{unit}</> : active.name}
       </FitText>
       {/* mobile: small "Starting at" + larger price */}
       <FitText fitM={[33, 93, 1596]} className="explore-title explore-lead">Starting at</FitText>

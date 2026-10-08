@@ -37,6 +37,7 @@ export type Category = {
   name: string
   href: string // Explore More card → full collection
   price?: number
+  unit?: string // defaults to 'sq ft'
   on: string // tile image when selected
   off: string
   tileD: Box
@@ -80,6 +81,7 @@ export const categories: Category[] = [
     name: 'Wall Panel',
     href: '/panels/collection',
     price: 450,
+    unit: 'Piece',
     on: 'tile-panel-on',
     off: 'tile-panel-off',
     tileD: { x: 933, y: 2003, w: 189 },

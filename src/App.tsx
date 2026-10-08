@@ -12,6 +12,7 @@ import { Inspiration } from './components/Inspiration'
 import { Stores } from './components/Stores'
 import { Footer } from './components/Footer'
 import { StickyBook } from './components/StickyBook'
+import { Navbar } from './components/Navbar'
 
 export default function App() {
   const stageRef = useRef<HTMLElement>(null)
@@ -19,6 +20,8 @@ export default function App() {
   useReveal(stageRef)
 
   return (
+    <>
+    <Navbar />
     <div className="stage-fit">
     <main className="stage" ref={stageRef}>
       <h1 className="sr-only">Diwali Makeover Fest — Give your home a Diwali makeover with wallpaper, wall panels and wooden flooring</h1>
@@ -37,5 +40,6 @@ export default function App() {
       <StickyBook />
     </main>
     </div>
+    </>
   )
 }
