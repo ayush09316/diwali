@@ -3,10 +3,15 @@ import type { CSSProperties } from 'react'
 export type Box = { x: number; y: number; w: number; h?: number }
 type MBox = Box & { s?: number }
 
-// Standalone HTML export embeds images in window.__ASSETS; the dev/prod builds fall back to /assets.
+// Images are served from the Cloudflare R2 image bucket (uploaded with the same file names as
+// public/assets). Set VITE_ASSET_BASE=/assets/ to serve the local copies instead.
+const ASSET_BASE = (import.meta.env.VITE_ASSET_BASE as string | undefined) ??
+  'https://materialdepotimages.materialdepot.com/application_image/diwali-makeover/'
+
+// Standalone HTML export embeds images in window.__ASSETS; otherwise they load from ASSET_BASE.
 export const asset = (name: string) => {
   const file = `${name}${/\.\w+$/.test(name) ? '' : '.webp'}`
-  return (window as { __ASSETS?: Record<string, string> }).__ASSETS?.[file] ?? `/assets/${file}`
+  return (window as { __ASSETS?: Record<string, string> }).__ASSETS?.[file] ?? `${ASSET_BASE}${file}`
 }
 
 export function place(d?: Box | null, m?: MBox | null): CSSProperties {

@@ -1,6 +1,6 @@
 import type { Box } from './utils'
 
-// "Three Quick Upgrades" carousel — images live at /assets/ba-<key>-before.webp / -after.webp
+// "Three Quick Upgrades" carousel — images are ba-<key>-before.webp / -after.webp
 export type Transformation = { key: string; alt: string }
 export const transformations: Record<'wallpaper' | 'panel' | 'flooring', Transformation[]> = {
   wallpaper: [
