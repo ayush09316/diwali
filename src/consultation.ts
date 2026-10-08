@@ -20,7 +20,8 @@ export type Lead = { name: string; contact: string; pincode: string; city: strin
 
 // ---- phone verification (OTP) ------------------------------------------------
 // Reuses the site's OTP endpoints purely to prove the number belongs to the visitor.
-// verify-otp also returns login tokens; they are ignored and no cookies are kept
+// verify-otp also returns login tokens; they are ignored (only the user id is read, for
+// analytics) and no cookies are kept
 // (credentials: 'omit'), so nobody is logged in.
 export const OTP_LENGTH = 4
 
@@ -56,6 +57,9 @@ export async function verifyOtp(contact: string, otp: string) {
     body: JSON.stringify({ contact, otp }),
   })
   if (!res.ok) throw new OtpError('Incorrect OTP. Please try again.')
+  // only the user id is kept (to link analytics profiles); the login tokens are discarded
+  const body = await res.json().catch(() => null)
+  return (body?.user?.id ?? body?.id ?? null) as string | null
 }
 
 const cookie = (name: string) => document.cookie.match(new RegExp(`(?:^|; )${name}=([^;]*)`))?.[1]

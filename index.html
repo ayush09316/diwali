@@ -20,6 +20,54 @@
       fbq('init', '552113979128378');
       fbq('track', 'PageView');
     </script>
+    <!-- Pinterest, OpenAI and MoEngage: copied from materialdepot_nextjs pages/_document.tsx -->
+    <script>
+!function(e){if(!window.pintrk){window.pintrk = function () {
+              window.pintrk.queue.push(Array.prototype.slice.call(arguments))};var
+              n=window.pintrk;n.queue=[],n.version="3.0";var
+              t=document.createElement("script");t.async=!0,t.src=e;var
+              r=document.getElementsByTagName("script")[0];
+              r.parentNode.insertBefore(t,r)}}("https://s.pinimg.com/ct/core.js");
+
+            pintrk('load', '2614023862078');
+            pintrk('page');
+    </script>
+    <script>
+(function (w, d, s, u) {
+              if (w.oaiq) return;
+              var q = function () { q.q.push(arguments); };
+              q.q = [];
+              w.oaiq = q;
+              var js = d.createElement(s);
+              js.async = true;
+              js.src = u;
+              var f = d.getElementsByTagName(s)[0];
+              f.parentNode.insertBefore(js, f);
+            })(window, document, "script", "https://bzrcdn.openai.com/sdk/oaiq.min.js");
+
+            oaiq("init", { pixelId: "CqnwD988SUYbikbZMZvLxK", user: { country: "IN" } });
+            oaiq("measure", "page_viewed", { type: "contents", contents: [{ id: location.pathname, name: location.pathname, content_type: "page" }] });
+    </script>
+    <script>
+      // MoEngage, loaded after window load like the main site's next/script lazyOnload
+      // (run during parsing, the SDK fails to initialise)
+      window.addEventListener('load', function () {
+        var webp = document.createElement('script');
+        webp.async = true;
+        webp.src = 'https://cdn.moengage.com/release/dc_3/moe_webSdk_webp.min.latest.js?app_id=Z0DYROG62DIQLRY8CGHNHXSG&env=LIVE';
+        document.head.appendChild(webp);
+var moeDataCenter = "dc_3";
+            var moeAppID = "Z0DYROG62DIQLRY8CGHNHXSG";
+            !function(e,n,i,t,a,r,o,d){if(!moeDataCenter||!moeDataCenter.match(/^dc_[0-9]+$/gm))return console.error("Data center has not been passed correctly. Please follow the SDK installation instruction carefully.");var s=e[a]=e[a]||[];if(s.invoked=0,s.initialised>0||s.invoked>0)return console.error("MoEngage Web SDK initialised multiple times. Please integrate the Web SDK only once!"),!1;e.moengage_object=a;var l={},g=function n(i){return function(){for(var n=arguments.length,t=Array(n),a=0;a<n;a++)t[a]=arguments[a];(e.moengage_q=e.moengage_q||[]).push({f:i,a:t})}},u=["track_event","add_user_attribute","add_first_name","add_last_name","add_email","add_mobile","add_user_name","add_gender","add_birthday","destroy_session","add_unique_user_id","update_unique_user_id","moe_events","call_web_push","track","location_type_attribute","identifyUser","getUserIdentities"],m={onsite:["getData","registerCallback","getSelfHandledOSM"]};for(var c in u)l[u[c]]=g(u[c]);for(var v in m)for(var f in m[v])null==l[v]&&(l[v]={}),l[v][m[v][f]]=g(v+"."+m[v][f]);r=n.createElement(i),o=n.getElementsByTagName("head")[0],r.async=1,r.src=t,o.appendChild(r),e.moe=e.moe||function(){return(s.invoked=s.invoked+1,s.invoked>1)?(console.error("MoEngage Web SDK initialised multiple times. Please integrate the Web SDK only once!"),!1):(d=arguments.length<=0?void 0:arguments[0],l)},r.addEventListener("load",function(){if(d)return e[a]=e.moe(d),e[a].initialised=e[a].initialised+1||1,!0}),r.addEventListener("error",function(){return console.error("Moengage Web SDK loading failed."),!1})}(window,document,"script","https://cdn.moengage.com/release/" + moeDataCenter + "/moe_webSdk.min.latest.js","Moengage");
+
+            window.Moengage = moe({
+              "app_id": moeAppID,
+              "env": "LIVE",
+              "logLevel": 0,
+              "enableSPA": true
+            });
+      });
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />

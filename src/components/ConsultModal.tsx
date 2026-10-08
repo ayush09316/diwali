@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type CSSProperties, type FormEvent } from 
 import { createPortal } from 'react-dom'
 import { asset } from '../utils'
 import { useIsDesktop } from '../hooks/useDesignCanvas'
-import { Events, track } from '../analytics'
+import { Events, identify, track } from '../analytics'
 import { bookConsultation, CITIES, OtpError, OTP_LENGTH, PRODUCTS, resendOtp, sendOtp, verifyOtp } from '../consultation'
 
 type Rect = [x: number, y: number, w: number, h: number]
@@ -148,8 +148,9 @@ export function ConsultModal({ onClose, position }: { onClose: () => void; posit
     if (otp.length !== OTP_LENGTH || status === 'verifying') return
     setStatus('verifying')
     setOtpError('')
+    let userId: string | null = null
     try {
-      await verifyOtp(values.contact, otp)
+      userId = await verifyOtp(values.contact, otp)
     } catch (err) {
       setOtpError(failMessage(err, 'Incorrect OTP. Please try again.'))
       setStatus('otp')
@@ -157,19 +158,22 @@ export function ConsultModal({ onClose, position }: { onClose: () => void; posit
     }
     try {
       await bookConsultation({ ...values, name: values.name.trim(), city, products })
-      track(Events.bookAppointmentSuccess, {
-        type: 'designer_consultation',
-        position,
-        location: 'diwali_makeover',
-        phone: values.contact,
-        fName: values.name.trim(),
-        pincode: values.pincode,
-      })
       setStatus('done')
     } catch {
       setOtpError('Something went wrong — please try again or call +91 81215 23945.')
       setStatus('otp')
+      return
     }
+    // analytics never affect the booking result
+    await identify({ userId, phone: values.contact, name: values.name, pincode: values.pincode, city })
+    track(Events.bookAppointmentSuccess, {
+      type: 'designer_consultation',
+      position,
+      location: 'diwali_makeover',
+      phone: values.contact,
+      fName: values.name.trim(),
+      pincode: values.pincode,
+    })
   }
 
   const resend = async () => {
