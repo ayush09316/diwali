@@ -130,6 +130,19 @@ a, button { color: inherit; text-decoration: none; font: inherit; background: no
 .btn-gallery { color: var(--ink); }
 .btn-gallery svg { width: auto; height: .7em; }
 
+/* floating Book button (outside the canvas, real CSS px) */
+.sticky-book {
+  position: fixed; z-index: 40; right: 16px; bottom: max(20px, env(safe-area-inset-bottom));
+  padding: 12px 20px; border: 2px solid #fff; border-radius: 999px; background: var(--ink); color: var(--yellow);
+  font: 600 15px/1.2 Figtree, system-ui, sans-serif; white-space: nowrap; box-shadow: 0 10px 26px rgba(27, 35, 50, .32);
+  opacity: 0; transform: translateY(24px); pointer-events: none; transition: opacity .3s, transform .3s, box-shadow .3s;
+}
+.sticky-book.on { opacity: 1; transform: none; pointer-events: auto; }
+.sticky-book.on:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(27, 35, 50, .38); }
+@media (min-width: 768px) {
+  .sticky-book { right: 32px; bottom: 32px; padding: 15px 30px; font-size: 18px; }
+}
+
 /* hero headline on the navy arch */
 .hero-tag { font-weight: 600; color: #f5d21c; background: linear-gradient(180deg, #fff35c 0%, #f7d51c 55%, #e2bb00 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 

@@ -11,6 +11,7 @@ import { WhyVisit } from './components/WhyVisit'
 import { Inspiration } from './components/Inspiration'
 import { Stores } from './components/Stores'
 import { Footer } from './components/Footer'
+import { StickyBook } from './components/StickyBook'
 
 export default function App() {
   const stageRef = useRef<HTMLElement>(null)
@@ -32,6 +33,7 @@ export default function App() {
       <Inspiration />
       <Stores />
       <Footer />
+      <StickyBook />
     </main>
   )
 }
