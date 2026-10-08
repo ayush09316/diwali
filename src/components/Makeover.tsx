@@ -4,7 +4,7 @@ import { categories, transformations, type Category } from '../data'
 import { FitText } from './FitText'
 import { Caret } from './Icons'
 
-const AUTO_MS = 3500
+const AUTO_MS = 1000
 
 const PANES = {
   before: { d: { x: 648, y: 2343, w: 366, h: 435 }, m: { x: 12, y: 931, w: 183, h: 216 } },
