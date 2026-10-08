@@ -29,7 +29,7 @@ function Cards({ category }: { category: Category }) {
               <span className="card-name">{card.name}</span>
             </a>
           ))}
-          <a href={`${SITE_URL}${category.href}`} target="_blank" rel="noreferrer" className="panel-card" style={{ left: cardLeft(category.cards.length) }}>
+          <a href={`${SITE_URL}${category.href}`} target="_blank" rel="noreferrer" className="panel-card more" style={{ left: cardLeft(category.cards.length) }}>
             <img src={asset(`card-${category.key}-explore`)} alt="" loading="lazy" />
             <span className="card-more">Explore More<span className="sr-only"> {category.name}</span></span>
           </a>

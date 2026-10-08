@@ -56,6 +56,16 @@ a, button { color: inherit; text-decoration: none; font: inherit; background: no
     width: calc(var(--mw) * 1px / var(--ms, 1));
   }
   .a[style*="--mh:"] { height: calc(var(--mh) * 1px / var(--ms, 1)); }
+  /* Groups drawn in desktop units and shrunk to fit the phone (tabs, Explore cards, tour,
+     store finder). Shrunk with transform, not a nested zoom: older iOS Safari (iPhone 11/12 on
+     older iOS) doesn't apply a nested zoom to text, so the text overflowed. */
+  .a[style*="--ms:"] {
+    zoom: 1;
+    transform: scale(var(--ms));
+    transform-origin: 0 0;
+    left: calc(var(--mx) * 1px);
+    top: calc(var(--my) * 1px);
+  }
   .d { display: none !important; }
   .stage .lead { font-size: 13.7px; font-weight: 400; padding-right: 4px; }
   .stage .lead b { font-weight: 600; }
@@ -209,7 +219,7 @@ a, button { color: inherit; text-decoration: none; font: inherit; background: no
 .panel-card { position: absolute; top: 0; width: 235px; height: 310px; border-radius: 22px; overflow: hidden; isolation: isolate; }
 /* zoom from the bottom edge so the name strip stays put while the photo grows */
 .panel-card img { width: 100%; height: 100%; object-fit: cover; transform-origin: 50% 100%; transition: transform var(--zoom-speed) var(--zoom-ease); }
-.panel-card:hover img { transform: scale(1.06); }
+.panel-card:not(.more):hover img { transform: scale(1.06); }
 .panel-card .card-name { position: absolute; left: 17px; right: 12px; top: 260px; bottom: 8px; display: flex; align-items: center; font-size: 19px; line-height: 1.15; font-weight: 600; color: #1f2533; }
 .panel-card .card-more { position: absolute; left: 26px; top: 95px; font-size: 26px; font-weight: 700; color: #8a3d0a; white-space: nowrap; }
 

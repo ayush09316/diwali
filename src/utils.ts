@@ -22,7 +22,7 @@ export function place(d?: Box | null, m?: MBox | null): CSSProperties {
     v['--my'] = m.y
     v['--mw'] = m.w
     if (m.h !== undefined) v['--mh'] = m.h
-    v['--ms'] = m.s ?? 1
+    if (m.s !== undefined) v['--ms'] = m.s
   }
   return v as CSSProperties
 }
